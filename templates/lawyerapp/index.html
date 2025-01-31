@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- site icon -->
+      <link rel="icon" href="images/fevicon.png" type="image/png" />
+      <!-- bootstrap css -->
+      <link rel="stylesheet" href="{% static 'lawyerapp/css/bootstrap.min.css'%}"/>
+      <!-- site css -->
+      <link rel="stylesheet" href="{% static 'lawyerapp/style.css'%}" />
+      <!-- responsive css -->
+      <link rel="stylesheet" href="{% static 'lawyerapp/css/responsive.css'%}" />
+      <!-- color css -->
+      <!-- select bootstrap -->
+      <link rel="stylesheet" href="{% static 'lawyerapp/css/bootstrap-select.css'%}" />
+      <!-- scrollbar css -->
+      <link rel="stylesheet" href="{% static 'lawyerapp/css/perfect-scrollbar.css'%}" />
+      <!-- custom css -->
+      <link rel="stylesheet" href="{% static 'lawyerapp/css/custom.css'%}" />
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+   </head>
+   <body class="dashboard dashboard_1">
+      <div class="full_container">
+         <div class="inner_container">
+            <!-- Sidebar  -->
+            {% include 'lawyerapp/sidebar.html' %}
+            <!-- end sidebar -->
+            <!-- right content -->
+            <div id="content">
+               <!-- topbar -->
+               {% include 'lawyerapp/top.html' %}
+               <!-- end topbar -->
+               <!-- dashboard inner -->
+               <div class="col-md-10 mt-5">
+                  <div class="white_shd full margin_bottom_30">
+                     <div class="full graph_head">
+                        <div class="heading1 margin_0">
+                           <h2>Todays Schedule </h2>
+                        </div>
+                     </div>
+                     <div class="full inner_elements">
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="tab_style2">
+                                 <div class="tabbar padding_infor_info">
+                                    <nav>
+                                       <div class="nav nav-tabs" id="nav-tab1" role="tablist">
+                                          <a class="nav-item nav-link active" id="nav-home-tab2" data-toggle="tab" href="#nav-home_s2" role="tab" aria-controls="nav-home_s2" aria-selected="true">Todays Appointments</a>
+                                          <a class="nav-item nav-link" id="nav-profile-tab2" data-toggle="tab" href="#nav-profile_s2" role="tab" aria-controls="nav-profile_s2" aria-selected="false">Upcoming Appointments</a>
+                                       </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent_2">
+                                       <div class="tab-pane fade show active" id="nav-home_s2" role="tabpanel" aria-labelledby="nav-home-tab">
+                                          <div class="table_section padding_infor_info">
+                                             <div class="table-responsive-sm">
+                                                <table class="table">
+                                                   <thead class="thead-light">
+                                                      <tr>
+                                                         <th>Client Name</th>
+                                                         <th>Case Category</th>
+                                                         <th>Message</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>John</td>
+                                                         <td>Doe</td>
+                                                         <td>john@example.com</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Mary</td>
+                                                         <td>Moe</td>
+                                                         <td>mary@example.com</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>July</td>
+                                                         <td>Dooley</td>
+                                                         <td>july@example.com</td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="tab-pane fade" id="nav-profile_s2" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                          <div class="table_section padding_infor_info">
+                                             <div class="table-responsive-sm">
+                                                <table class="table">
+                                                   <thead class="thead-light">
+                                                      <tr>
+                                                         <th>Client Name</th>
+                                                         <th>Case Category</th>
+                                                         <th>Message</th>
+                                                      </tr>
+                                                   </thead>
+                                                   <tbody>
+                                                      <tr>
+                                                         <td>John</td>
+                                                         <td>Doe</td>
+                                                         <td>john@example.com</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>Mary</td>
+                                                         <td>Moe</td>
+                                                         <td>mary@example.com</td>
+                                                      </tr>
+                                                      <tr>
+                                                         <td>July</td>
+                                                         <td>Dooley</td>
+                                                         <td>july@example.com</td>
+                                                      </tr>
+                                                   </tbody>
+                                                </table>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- end dashboard inner -->
+            </div>
+         </div>
+      </div>
+      <!-- jQuery -->
+      <script src="{% static 'lawyerapp/js/jquery.min.js'%}"></script>
+      <script src="{% static 'lawyerapp/js/popper.min.js'%}"></script>
+      <script src="{% static 'lawyerapp/js/bootstrap.min.js'%}"></script>
+      <!-- wow animation -->
+      <script src="{% static 'lawyerapp/js/animate.js'%}"></script>
+      <!-- select country -->
+      <script src="{% static 'lawyerapp/js/bootstrap-select.js'%}"></script>
+      <!-- owl carousel -->
+      <script src="{% static 'lawyerapp/js/owl.carousel.js'%}"></script> 
+      <!-- chart js -->
+      <script src="{% static 'lawyerapp/js/Chart.min.js'%}"></script>
+      <script src="{% static 'lawyerapp/js/Chart.bundle.min.js'%}"></script>
+      <script src="{% static 'lawyerapp/js/utils.js'%}"></script>
+      <script src="{% static 'lawyerapp/js/analyser.js'%}"></script>
+      <!-- nice scrollbar -->
+      <script src="{% static 'lawyerapp/js/perfect-scrollbar.min.js'%}"></script>
+      <script>
+         var ps = new PerfectScrollbar('#sidebar');
+      </script>
+      <!-- custom js -->
+      <script src="{% static 'lawyerapp/js/custom.js'%}"></script>
+      <script src="{% static 'lawyerapp/js/chart_custom_style1.js'%}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+   </body>
+</html>

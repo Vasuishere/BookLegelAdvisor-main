@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f8f9fa; font-family: Arial, sans-serif;">
+    <div style="background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); width: 350px; text-align: center;">
+        <h2 style="color: #333;">Welcome to Sneat! <span>&#128075;</span></h2>
+        <p style="color: #666;">Please sign-in to your account and start the adventure</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <label style="display: block; text-align: left; margin-bottom: 5px; color: #333;">Email or Username</label>
+            <input type="text" id="email" name="name" placeholder="Enter your email or username" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;">
+            
+            <label  style="display: block; text-align: left; margin-bottom: 5px; color: #333;">Password</label>
+            <div style="position: relative;">
+                <input type="password" id="password" name="password" placeholder="**********" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+                <span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;">&#128065;</span>
+            </div>
+            
+            {% if error %}
+            <span style="font-size:small; color: red;">{{error}}</span>
+            {% endif %}
+                
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <label style="display: flex; align-items: center;">
+                    <input type="checkbox" style="margin-right: 5px;"> Remember Me
+                </label>
+                <a href="#" style="color: #6c63ff; text-decoration: none;">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" style="width: 100%; padding: 10px; background-color: #6c63ff; color: white; border: none; border-radius: 5px; margin-top: 20px; cursor: pointer;">Sign in</button>
+        </form>
+        <p style="margin-top: 15px; color: #666;">New on our platform? <a href="#" style="color: #6c63ff; text-decoration: none;">Create an account</a></p>
+    </div>
+</body>
+</html>

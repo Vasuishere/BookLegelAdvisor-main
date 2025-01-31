@@ -1,0 +1,254 @@
+from django.shortcuts import render,redirect,get_object_or_404
+from userapp.models import contact,Appointment,Attorneys,case_categories,Types_Law,Blog,case_studies,Client_Review
+from adminapp.models import adminuser,lawyer
+from clientapp.models import clients
+from .forms import Attorneys_edit_Form,case_categories_edit_Form,types_edit_Form,case_studies_Form,blog_edit_Form,add_lawyer,add_clients_forms
+
+# Create your views here.
+def index(request):
+    return render(request,'adminapp/index.html')
+
+def Show_contact(request):
+    data = contact.objects.all
+    return render(request,'adminapp/contact.html',{"data":data})
+
+def Show_Appointment(request):
+    data = Appointment.objects.all
+    return render(request,'adminapp/appointment.html',{"data":data})
+
+def login(request):
+    if request.session.get("islogin"):
+        return redirect("/index")
+    if request.POST:
+        name = request.POST["name"]
+        password = request.POST["password"]
+        user = adminuser.objects.filter(name=name,password=password).count()
+        if user>0:
+            request.session['islogin'] = True
+            request.session['name'] = name
+            request.session['user_id'] = user.id
+            return redirect("/index")
+    return render(request,'adminapp/login.html')
+
+def logout(request):
+    del request.session["islogin"]
+    return redirect("/")
+
+def blog(request):
+    data = Blog.objects.all
+    return render(request,'adminapp/blog.html',{"data":data})
+
+def add_blog(request):
+    if request.method == 'POST':
+        form = blog_edit_Form(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/blog')
+    else:
+        form = blog_edit_Form()
+    return render(request, 'adminapp/add_blog.html', {'form': form})
+
+def edit_blog(request, id):
+    blog = get_object_or_404(Blog, id=id)
+    if request.method == 'POST':
+        form = blog_edit_Form(request.POST, request.FILES, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('/blog')
+    else:
+        form = blog_edit_Form(instance=blog)
+    return render(request, 'adminapp/add_blog.html', {'form': form})
+
+def delete_blog(request, id):
+    data = Blog.objects.get(id=id).delete()
+    return redirect("/blog")
+
+def attorneys(request):
+    data = Attorneys.objects.all
+    return render(request,'adminapp/attorneys.html',{"data":data})
+
+def case_catogory(request):
+    data = case_categories.objects.all
+    return render(request,'adminapp/case_categories.html',{"data":data})
+
+
+def add_team(request):
+    if request.method == 'POST':  
+        form = Attorneys_edit_Form(request.POST, request.FILES)  
+        if form.is_valid():  
+            form.save()  
+            return redirect('/attorneys')  
+    else:
+        form = Attorneys_edit_Form()  
+    return render(request, 'adminapp/add_team.html', {'form': form})
+
+def edit_attorneys(request,id):
+    attorneys_instance = get_object_or_404(Attorneys, pk=id)
+    if request.method == 'POST':
+        form = Attorneys_edit_Form(request.POST, request.FILES, instance=attorneys_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/attorneys')
+    else:
+        form = Attorneys_edit_Form(instance=attorneys_instance)
+    return render(request, 'adminapp/add_team.html', {'form': form})
+
+# def add_or_edit_attorneys(request, id=None):
+#     instance = get_object_or_404(Attorneys, pk=id) if id else None
+#     if request.method == 'POST':
+#         form = Attorneys_edit_Form(request.POST, request.FILES, instance=instance)
+#         if form.is_valid():
+#             form.save()  
+#             return redirect('/attorneys')
+#     else:
+#         form = Attorneys_edit_Form(instance=instance)
+
+#     context = {
+#         'form': form,
+#         'is_edit': id is not None  
+#     }
+#     return render(request, 'adminapp/attorneys.html',{"form":form})
+
+
+def delete_Attorneys(request,id):
+    data = Attorneys.objects.get(id=id).delete()
+    return redirect("/attorneys")
+
+def add_or_edit_case_categories(request, id=None):
+    instance = get_object_or_404(case_categories, pk=id) if id else None
+    if request.method == 'POST':
+        form = case_categories_edit_Form(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()  
+            return redirect('/case_categories')
+    else:
+        form = case_categories_edit_Form(instance=instance)
+
+    context = {
+        'form': form,
+        'is_edit': id is not None  
+    }
+    return render(request, 'adminapp/add_case_categories.html',{"form":form})
+        
+
+def types_Law(request):
+    data = Types_Law.objects.all
+    return render(request,'adminapp/types_Law.html',{"data":data})
+
+def add_or_edit_types_law(request, id=None):
+    instance = get_object_or_404(Types_Law, pk=id) if id else None
+    if request.method == 'POST':
+        form = types_edit_Form(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/types_Law')
+    else:
+        form = types_edit_Form(instance=instance)
+
+    context = {
+        'form': form,
+        'is_edit': id is not None  
+    }
+    return render(request, 'adminapp/add_types_law.html', {'form': form})
+
+def delete_case_categories(request,id):
+    data = case_categories.objects.get(id=id).delete()
+    return redirect("/case_categories")
+
+def delete_types_law(request,id):
+    data = Types_Law.objects.get(id=id).delete()
+    return redirect("/types_Law")
+
+def casestudies(request):
+    data = case_studies.objects.all()
+    return render(request,'adminapp/casestudies.html',{"data":data})
+
+def add_or_edit_case_study(request, pk=None):
+    instance = get_object_or_404(case_studies, pk=pk) if pk else None
+    if request.method == "POST":
+        form = case_studies_Form(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()  
+            return redirect('/case_studies')  
+    else:
+        form = case_studies_Form(instance=instance)
+
+    context = {
+        'form': form,
+        'is_edit': pk is not None  
+    }
+    return render(request, 'adminapp/add_case_studies.html', context)
+
+def reviews(request):
+    data = Client_Review.objects.all
+    return render(request,'adminapp/reviews.html',{"data":data})
+
+def lawyers(request):
+    data = lawyer.objects.all
+    return render(request,'adminapp/lawyer.html',{"data":data})
+
+def add_new_lawyer(request):
+    if request.method == 'POST':  
+        form = add_lawyer(request.POST)  
+        if form.is_valid():  
+            form.save()  
+            return redirect('/lawyer')  
+    else:
+        form = add_lawyer()  
+    return render(request, 'adminapp/add_lawyer.html', {'form': form})
+
+def client(request):
+    data = clients.objects.all()
+    return render(request,'adminapp/clients.html',{"data":data})
+
+# def add_new_client(request):
+#     if request.method == 'POST':  
+#         form = add_clients_forms(request.POST)  
+#         if form.is_valid():  
+#             form.save()  
+#             return redirect('/clients')  
+#     else:
+#         form = add_lawyer()  
+#     return render(request, 'adminapp/add_lawyer.html', {'form': form})
+
+# def edit_client(request,id):
+#     client_instance = get_object_or_404(clients, pk=id)
+#     if request.method == 'POST':
+#         form = add_clients_forms(request.POST, request.FILES, instance=client_instance)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('/lawyer')
+#     else:
+#         form = add_lawyer(instance=client_instance)
+#     return render(request, 'adminapp/add_lawyer.html', {'form': form})
+
+def add_or_edit_client(request, pk=None):
+    instance = get_object_or_404(clients, pk=pk) if pk else None
+    if request.method == "POST":
+        form = add_clients_forms(request.POST, request.FILES, instance=instance)
+        if form.is_valid():
+            form.save()  
+            return redirect('/clients')  
+    else:
+        form = add_clients_forms(instance=instance)
+        
+        context = {
+        'form': form,
+        'is_edit': pk is not None  
+    }
+    return render(request, 'adminapp/add_client.html', context)
+
+
+def edit_lawyer(request,id):
+    lawyer_instance = get_object_or_404(lawyer, pk=id)
+    if request.method == 'POST':
+        form = add_lawyer(request.POST, request.FILES, instance=lawyer_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/lawyer')
+    else:
+        form = add_lawyer(instance=lawyer_instance)
+    return render(request, 'adminapp/add_lawyer.html', {'form': form})
+
+def demo(request):
+    return render(request,'adminapp/demo.html')

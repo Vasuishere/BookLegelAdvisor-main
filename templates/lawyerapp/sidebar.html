@@ -1,0 +1,58 @@
+{% load static %}
+<nav id="sidebar">
+    <div class="sidebar_blog_1">
+       <div class="sidebar-header">
+          <div class="logo_section">
+             <a href="index.html"><img class="logo_icon img-responsive" src="{% static 'lawyerapp/images/logo/logo_icon.png'%}" alt="#" /></a>
+          </div>
+       </div>
+       <div class="sidebar_user_info">
+          <div class="icon_setting"></div>
+          <div class="user_profle_side">
+             <div class="user_img"><img class="img-responsive" src="{% static 'lawyerapp/images/layout_img/user_img.jpg'%}" alt="#" /></div>
+             <div class="user_info">
+                <h6>{{data.name}}</h6>
+                <p><span class="online_animation"></span> Online</p>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="sidebar_blog_2">
+       <h4>Welcome </h4>
+       <ul class="list-unstyled components">
+          <li class="active">
+             <a href="index"><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
+          </li>
+          <li><a href="activeclient"><i class="fa-solid fa-briefcase" style="color: #FFD43B;"></i> <span>Active Clients</span></a></li>
+          <li>
+             <a href="#Appointments" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Appointments</span></a>
+             <ul class="collapse list-unstyled" id="Appointments">
+                <li><a href="virtualappointment"><span>Virtual Appointments</span></a></li>
+                <li><a href="appointment"><span>Appointments</span></a></li>
+             </ul>
+          </li>
+          <li><a href="pricing"><i class="fa fa-briefcase blue1_color"></i> <span>Pricing Tables</span></a></li>
+          <li>
+             <a href="profile">
+               <i class="fa-solid fa-user" style="color: #B197FC;"></i> <span>Profile</span></a>
+          </li>
+          <li class="active">
+             <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>More </span></a>
+             <ul class="collapse list-unstyled" id="additional_page">
+                <li>
+                   <a href="profile">> <span>Profile</span></a>
+                </li>
+                <li>
+                   <a href="project.html">> <span>Projects</span></a>
+                </li>
+                <li>
+                   <a href="login">> <span>Login</span></a>
+                </li>
+                <li>
+                   <a href="404_error.html">> <span>404 Error</span></a>
+                </li>
+             </ul>
+          </li>
+       </ul>
+    </div>
+ </nav>

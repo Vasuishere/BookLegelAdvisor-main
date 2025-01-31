@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Kanun - Law Firm Website Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Law Firm Website Template" name="keywords">
+        <meta content="Law Firm Website Template" name="description">
+
+        <!-- Favicon -->
+        <link href="{% static 'userapp/img/favicon.ico'%}" rel="icon">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,600;1,700;1,800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="{% static 'userapp/lib/animate/animate.min.css'%}" rel="stylesheet">
+        <link href="{% static 'userapp/lib/owlcarousel/assets/owl.carousel.min.css'%}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'userapp/css/style.css'%}" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="wrapper">
+            {% include 'userapp/header.html' %}
+
+            <!-- Page Header Start -->
+            <div class="page-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>About Us</h2>
+                        </div>
+                        <div class="col-12">
+                            <a href="">Home</a>
+                            <a href="">About Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+
+
+            <!-- About Start -->
+            <div class="about">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-5 col-md-5">
+                            <div class="about-img">
+                                <img src="{% static 'userapp/img/about.jpg'%}" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-6">
+                            <div class="section-header">
+                                <h2>Learn About Us</h2>
+                            </div>
+                            <div class="about-text">
+                                <p>
+                                    Welcome to Book Legal Advisor, your trusted partner in simplifying and streamlining legal practice management. We are dedicated to empowering advocates and legal professionals with innovative tools that enhance productivity, organization, and client satisfaction. Our platform is designed to address the unique challenges faced by the legal industry, from team coordination and case management to time optimization and seamless communication. Whether you are an independent advocate or part of a larger firm, our solutions are tailored to meet your needs, ensuring that you can focus on what matters most—delivering exceptional legal services.
+                                </p>
+                                <p>
+                                    At Book Legal Advisor, we believe in the power of technology to transform workflows and improve outcomes. With features like automated scheduling, 24/7 accessibility, and user-friendly interfaces, we aim to make legal management more efficient, affordable, and accessible for all. Driven by a passion for innovation and excellence, our team continuously strives to provide a platform that evolves with the dynamic demands of the legal profession. Join us as we redefine how legal practices operate in today’s fast-paced, digital-first world
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- About End -->
+
+
+            <!-- Timeline Start -->
+            <div class="timeline">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Learn About Our Journey</h2>
+                    </div>
+                    <div class="timeline-start">
+                        <div class="timeline-container left">
+                            <div class="timeline-content">
+                                <h2><span>2024</span>AI-Powered Legal Insights Launched</h2>
+                                <p>
+                                    We introduced AI-driven legal insights and analytics, helping professionals predict case outcomes and make data-backed decisions. This innovation marked a new era of efficiency for our users.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-container right">
+                            <div class="timeline-content">
+                                <h2><span>2023</span>Client-Centric Upgrades</h2>
+                                <p>
+                                    We rolled out significant upgrades, enhancing user experience with new features like automated appointment reminders, customizable workflows, and advanced case management tools.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-container left">
+                            <div class="timeline-content">
+                                <h2><span>2022</span>Expansion to New Horizons</h2>
+                                <p>
+                                    We expanded our services to include advanced legal tech solutions, integrating AI tools to streamline legal processes. This marked a significant step towards improving client efficiency and satisfaction.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-container right">
+                            <div class="timeline-content">
+                                <h2><span>2021</span>Celebrating Success with 10,000 Clients</h2>
+                                <p>
+                                    Our platform reached a milestone of serving over 10,000 clients globally, reinforcing trust and reliability in providing top-notch legal solutions.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-container left">
+                            <div class="timeline-content">
+                                <h2><span>2020</span>Introducing Collaborative Tools</h2>
+                                <p>
+                                    We launched secure team collaboration features, empowering legal teams to work more efficiently. Enhanced communication tools enabled seamless client-lawyer interactions.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="timeline-container right">
+                            <div class="timeline-content">
+                                <h2><span>2019</span>Our Journey Begins</h2>
+                                <p>
+                                    Book Legal Advisor was founded with a mission to simplify legal services through innovative technology. From day one, we focused on client-centric solutions to support legal professionals.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Timeline End -->
+
+
+            <!-- Team Start -->
+            <div class="team">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Meet Our Expert Attorneys</h2>
+                    </div>
+                    <div class="row">
+                        {% for i in data %}
+                        <div class="col-lg-3 col-md-6">
+                            <div class="team-item">
+                                <div class="team-img">
+                                    <img src="{{ i.image.url }}" alt="Team Image">
+                                </div>
+                                <div class="team-text">
+                                    <h2>{{i.name}}</h2>
+                                    <p>{{i.profession}}</p>
+                                    <div class="team-social">
+                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
+                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <!-- Team End -->
+
+
+            <!-- Newsletter Start -->
+            <div class="newsletter">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Subscribe Our Newsletter</h2>
+                    </div>
+                    <div class="form">
+                        <input class="form-control" placeholder="Email here">
+                        <button class="btn">Submit</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Newsletter End -->
+            {% include 'userapp/footer.html'%}
+
+
+
+            <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'userapp/lib/easing/easing.min.js'%}"></script>
+        <script src="{% static 'userapp/lib/owlcarousel/owl.carousel.min.js'%}"></script>
+        <script src="{% static 'userapp/lib/isotope/isotope.pkgd.min.js'%}"></script>
+
+        <!-- Template Javascript -->
+        <script src="{% static 'userapp/js/main.js'%}"></script>
+    </body>
+</html>
