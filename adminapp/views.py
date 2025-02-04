@@ -238,6 +238,9 @@ def add_or_edit_client(request, pk=None):
     }
     return render(request, 'adminapp/add_client.html', context)
 
+def delete_client(request,id):
+    data = clients.objects.get(id=id).delete()
+    return render(request, "adminapp/clients.html")
 
 def edit_lawyer(request,id):
     lawyer_instance = get_object_or_404(lawyer, pk=id)

@@ -1,5 +1,6 @@
 from django.db import models
 from clientapp.models import clients
+from adminapp.models import lawyer
 
 # Create your models here.
 class user(models.Model):
@@ -74,6 +75,7 @@ class case_studies(models.Model):
 
 class Appointment(models.Model):
     userid = models.ForeignKey(clients,models.CASCADE)
+    lid = models.ForeignKey(lawyer,models.CASCADE)
     name = models.CharField(max_length=50)
     email = models.EmailField()
     phoneno = models.CharField(max_length=50)

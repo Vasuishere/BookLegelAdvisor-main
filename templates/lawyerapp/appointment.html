@@ -47,7 +47,80 @@
                {% include 'lawyerapp/top.html' %}
                <!-- end topbar -->
                <!-- dashboard inner -->
-               {% comment %} For Inner Type Here {% endcomment %}
+               <div class="full inner_elements">
+                  <div class="row">
+                     <div class="col-md-12">
+                        <div class="tab_style2">
+                           <div class="tabbar padding_infor_info">
+                              <nav>
+                                 <div class="nav nav-tabs" id="nav-tab1" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-home-tab2" data-toggle="tab" href="#nav-home_s2" role="tab" aria-controls="nav-home_s2" aria-selected="true">Todays Appointments</a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab2" data-toggle="tab" href="#nav-profile_s2" role="tab" aria-controls="nav-profile_s2" aria-selected="false">Upcoming Appointments</a>
+                                 </div>
+                              </nav>
+                              <div class="tab-content" id="nav-tabContent_2">
+                                 <div class="tab-pane fade show active" id="nav-home_s2" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <div class="table_section padding_infor_info">
+                                       <div class="table-responsive-sm">
+                                          <table class="table">
+                                             <thead class="thead-light">
+                                                <tr>
+                                                   <th>Client Name</th>
+                                                   <th>Case Category</th>
+                                                   <th>Message</th>
+                                                </tr>
+                                             </thead>
+                                          {% for i in data %}
+                                             <tbody>
+                                                <tr>
+                                                   <td>{{i.name}}</td>
+                                                   <td>Doe</td>
+                                                   <td>john@example.com</td>
+                                                </tr>
+                                             </tbody>
+                                             {% endfor %}
+                                          </table>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="tab-pane fade" id="nav-profile_s2" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="table_section padding_infor_info">
+                                       <div class="table-responsive-sm">
+                                          <table class="table">
+                                             <thead class="thead-light">
+                                                <tr>
+                                                   <th>Client Name</th>
+                                                   <th>Case Category</th>
+                                                   <th>Message</th>
+                                                </tr>
+                                             </thead>
+                                             <tbody>
+                                                <tr>
+                                                   <td>John</td>
+                                                   <td>Doe</td>
+                                                   <td>john@example.com</td>
+                                                </tr>
+                                                <tr>
+                                                   <td>Mary</td>
+                                                   <td>Moe</td>
+                                                   <td>mary@example.com</td>
+                                                </tr>
+                                                <tr>
+                                                   <td>July</td>
+                                                   <td>Dooley</td>
+                                                   <td>july@example.com</td>
+                                                </tr>
+                                             </tbody>
+                                          </table>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
                <!-- end dashboard inner -->
             </div>
          </div>

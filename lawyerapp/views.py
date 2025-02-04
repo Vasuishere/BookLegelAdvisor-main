@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import lawyers
 from adminapp.models import lawyer
 from clientapp.models import clients
+from userapp.models import Appointment
 from adminapp.forms import update_lawyer_profile
 from django.contrib import messages
 
@@ -47,7 +48,6 @@ def profile_update(request,id):
     return render(request,'lawyerapp/profile_update.html')
 
 
-
 def activeclient(request):
     lawyer_id = request.session['user_id']
     data = clients.objects.filter(lid=lawyer_id)
@@ -55,8 +55,11 @@ def activeclient(request):
 
 def pricing(request):
     return render(request,'lawyerapp/pricing.html')
+
 def appointment(request):
-    return render(request,'lawyerapp/appointment.html')
+    lawyer_id = request.session['user_id']
+    data = Appointment.objects.filter(lid=lawyer_id)
+    return render(request,'lawyerapp/appointment.html',{"data":data})
 
 def demo(request):
     return render(request,'lawyerapp/demo.html')
