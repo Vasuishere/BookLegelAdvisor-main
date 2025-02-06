@@ -80,20 +80,12 @@
                                                 </div>
                                              </div>
                                              <div class="bottom_list">
-                                                <div class="left_rating">
-                                                   <p class="ratings">
-                                                      <a href="#"><span class="fa fa-star"></span></a>
-                                                      <a href="#"><span class="fa fa-star"></span></a>
-                                                      <a href="#"><span class="fa fa-star"></span></a>
-                                                      <a href="#"><span class="fa fa-star"></span></a>
-                                                      <a href="#"><span class="fa fa-star-o"></span></a>
-                                                   </p>
-                                                </div>
                                                 <div class="right_button">
-                                                   <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
-                                                   </i> <i class="fa fa-comments-o"></i> 
-                                                   </button>
-                                                   <button type="button" class="btn btn-primary btn-xs">
+                                                   {% comment %} <button type="button" href="" class="btn btn-success btn-xs"> <i class="fa fa-user">
+                                                   </i> Send Message</i> 
+                                                   </button> {% endcomment %}
+                                                   <a href="message/{{i.id}}" type="button" class="btn btn-success btn-xs"> Message</a>
+                                                   <button type="button" class="btn btn-primary btn-xs mt-2">
                                                    <i class="fa fa-user"> </i> View Profile
                                                    </button>
                                                 </div>

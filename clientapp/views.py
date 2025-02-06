@@ -10,7 +10,7 @@ def index(request):
 
 def login_view(request):
     if request.session.get("islogin"):
-        return redirect("/index")
+        return redirect("/clientapp/index")
     if request.POST:
         name = request.POST['name']
         password = request.POST['password']
@@ -19,14 +19,14 @@ def login_view(request):
             request.session['islogin'] = True
             request.session['name'] = name
             request.session['user_id'] = client['id']
-            return redirect('/index')
+            return redirect('/clientapp/index')
         else :
             return render(request,'clientapp/login.html',{'error':'Invalid username or password'})
     return render(request,'clientapp/login.html')
 
 def logout(request):
     del request.session['islogin']
-    return redirect("/")
+    return redirect("/clientapp")
 
 def appointment(request):
     if request.method == "POST":  
@@ -38,7 +38,7 @@ def appointment(request):
         user_id = request.session['user_id']
         obj = Appointment(name=name, email=email, phoneno=phoneno, message=message, up_doc1=up_doc1,userid_id=user_id)
         obj.save()
-        return redirect("/index")  
+        return redirect("clientapp/index")  
     return render(request, "clientapp/appointment.html")
 
 def details(request):

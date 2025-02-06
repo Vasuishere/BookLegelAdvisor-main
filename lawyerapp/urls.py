@@ -19,16 +19,16 @@ from django.urls import path
 from lawyerapp import views
 
 urlpatterns = [
-    path('demo',views.demo),
-    path('pricing',views.pricing),
-    path('virtualappointment',views.virtualappointment),
-    path('appointment',views.appointment),
-    path('profile',views.profile),
-    path('profile_update',views.profile_update),
-    
-    
-    path('activeclient',views.activeclient),
-    path('index', views.index),
+    path('admin/', admin.site.urls),
+    path('/demo', views.demo),
+    path('/pricing', views.pricing),
+    path('/virtualappointment', views.virtualappointment),
+    path('/appointment', views.appointment),
+    path('/profile', views.profile),
+    path('/profile_update', views.profile_update),
+    path('/message/<int:id>/', views.message, name='message'),
+    path('/activeclient', views.activeclient),
+    path('/index', views.index),
     path('', views.login_lawyer),
-    path('logout', views.logout),
+    path('/logout', views.logout),
 ]

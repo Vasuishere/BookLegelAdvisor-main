@@ -12,11 +12,22 @@ class clients(models.Model):
     def __str__(self):
         return self.name
     
+# class messages(models.Model):
+#     title = models.CharField(max_length=30)
+#     msg = models.CharField(max_length=1000)
+#     cname = models.CharField(max_length=25)
+#     # client = models.
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     def __str__(self):
+#         return f"{self.sender}send message to {self.client}"
+
 class messages(models.Model):
     title = models.CharField(max_length=30)
-    message = models.CharField(max_length=1000)
-    # client = models.
+    msg = models.CharField(max_length=1000)
+    client = models.ForeignKey('clients', on_delete=models.CASCADE)  # Correct client reference
     created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
-        return f"{self.sender}send message to {self.client}"
+        return f"Message from {self.client}"
+
     
