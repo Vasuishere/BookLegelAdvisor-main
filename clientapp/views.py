@@ -10,7 +10,7 @@ def index(request):
 
 def login_view(request):
     if request.session.get("islogin"):
-        return redirect("/clientapp/index")
+        return redirect("index")
     if request.POST:
         name = request.POST['name']
         password = request.POST['password']
@@ -19,27 +19,55 @@ def login_view(request):
             request.session['islogin'] = True
             request.session['name'] = name
             request.session['user_id'] = client['id']
-            return redirect('/clientapp/index')
+            return redirect('index')
         else :
             return render(request,'clientapp/login.html',{'error':'Invalid username or password'})
     return render(request,'clientapp/login.html')
 
 def logout(request):
     del request.session['islogin']
-    return redirect("/clientapp")
+    return redirect("/")
 
+# def appointment(request):
+#     if request.method == "POST":  
+#         name = request.POST.get("name")
+#         email = request.POST.get("email")
+#         phoneno = request.POST.get("phoneno")
+#         message = request.POST.get("message")
+#         up_doc1 = request.FILES.get("up_doc1")
+#         user_id = request.session['user_id']
+#         obj = Appointment(name=name, email=email, phoneno=phoneno, message=message, up_doc1=up_doc1,userid_id=user_id)
+#         obj.save()
+#         return redirect("clientapp/index")  
+    # return render(request, "clientapp/appointment.html")
 def appointment(request):
-    if request.method == "POST":  
+    if request.method == "POST":
         name = request.POST.get("name")
         email = request.POST.get("email")
         phoneno = request.POST.get("phoneno")
         message = request.POST.get("message")
         up_doc1 = request.FILES.get("up_doc1")
         user_id = request.session['user_id']
-        obj = Appointment(name=name, email=email, phoneno=phoneno, message=message, up_doc1=up_doc1,userid_id=user_id)
+
+        # Fetch the client based on session user_id
+        client = clients.objects.get(id=user_id)
+        lawyer_name = client.lid.name  # Fetching lawyer's name from the ForeignKey field
+
+        # Save appointment
+        obj = Appointment(
+            name=name, 
+            email=email, 
+            phoneno=phoneno, 
+            message=message, 
+            up_doc1=up_doc1, 
+            userid_id=user_id, 
+            lawyer=lawyer_name  # Store lawyer's name
+        )
         obj.save()
-        return redirect("clientapp/index")  
+        return redirect("clientapp/index")
+
     return render(request, "clientapp/appointment.html")
+
 
 def details(request):
     return render(request,'clientapp/details.html')

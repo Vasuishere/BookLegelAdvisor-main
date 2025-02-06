@@ -7,7 +7,7 @@ from adminapp.forms import update_lawyer_profile
 
 def login_lawyer(request):
     if request.session.get("is_login"):
-        return redirect("/lawyerapp/index")
+        return redirect("/index")
     if request.POST:
         email = request.POST['email']
         password = request.POST['password']
@@ -17,12 +17,12 @@ def login_lawyer(request):
             request.session['user_id'] = lawyerData['id']
             request.session['name'] = lawyerData['name']
             request.session['email'] = email
-            return redirect("/lawyerapp/index")
+            return redirect("/index")
     return render(request,"lawyerapp/login.html")
 
 def logout(request):
     del request.session['is_login']
-    return redirect("/lawyerapp")
+    return redirect("/")
 
 
 def index(request):
