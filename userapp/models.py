@@ -74,18 +74,13 @@ class case_studies(models.Model):
         return self.case_studies_tittle
 
 class Appointment(models.Model):
-    userid = models.ForeignKey(clients,models.CASCADE)
-    lid = models.ForeignKey(lawyer,models.CASCADE)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     email = models.EmailField()
-    phoneno = models.CharField(max_length=50)
-    service = models.CharField(max_length=50)
-    gender = models.CharField(max_length=50)
-    message = models.TextField(max_length=2000)
-    date = models.DateField(null=True, blank=True)
-    time = models.TimeField(null=True, blank=True)
-    up_doc1 = models.FileField(upload_to='image/', blank=True, null=True)
-
+    phoneno = models.CharField(max_length=15)
+    message = models.TextField()
+    up_doc1 = models.FileField(upload_to='appointments/', null=True, blank=True)
+    userid = models.ForeignKey(clients, on_delete=models.CASCADE)
+    lid = models.ForeignKey(lawyer, on_delete=models.CASCADE)
+    
     def __str__(self):
-        return self.name
-
+        return f"Appointment for {self.name} with {self.lid.name}"

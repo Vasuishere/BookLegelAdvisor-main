@@ -17,21 +17,21 @@ def Show_Appointment(request):
     return render(request,'adminapp/appointment.html',{"data":data})
 
 def login(request):
-    if request.session.get("islogin"):
+    if request.session.get("isadminlogin"):
         return redirect("index")
     if request.POST:
         name = request.POST["name"]
         password = request.POST["password"]
         user = adminuser.objects.filter(name=name,password=password).count()
         if user>0:
-            request.session['islogin'] = True
+            request.session['isadminlogin'] = True
             request.session['name'] = name
             # request.session['user_id'] = user.id
-            return redirect("index")
+            return redirect("/index")
     return render(request,'adminapp/login.html')
 
 def logout(request):
-    del request.session["islogin"]
+    del request.session["isadminlogin"]
     return redirect("/")
 
 def blog(request):

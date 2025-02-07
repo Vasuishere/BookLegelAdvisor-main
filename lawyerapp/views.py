@@ -6,14 +6,14 @@ from userapp.models import Appointment
 from adminapp.forms import update_lawyer_profile
 
 def login_lawyer(request):
-    if request.session.get("is_login"):
+    if request.session.get("islawyerlogin"):
         return redirect("/index")
     if request.POST:
         email = request.POST['email']
         password = request.POST['password']
         lawyerData = lawyer.objects.filter(email=email,password=password).values('id','name').first()
         if lawyerData != None:
-            request.session['is_login'] = True
+            request.session['islawyerlogin'] = True
             request.session['user_id'] = lawyerData['id']
             request.session['name'] = lawyerData['name']
             request.session['email'] = email
@@ -21,12 +21,14 @@ def login_lawyer(request):
     return render(request,"lawyerapp/login.html")
 
 def logout(request):
-    del request.session['is_login']
+    del request.session['islawyerlogin']
     return redirect("/")
 
 
 def index(request):
-    return render(request, 'lawyerapp/index.html')
+    lawyer_id = request.session['user_id']
+    data = Appointment.objects.filter(lid=lawyer_id)
+    return render(request, 'lawyerapp/index.html',{"data":data})
 
 def virtualappointment(request):
     return render(request,'lawyerapp/virtualappointment.html')

@@ -77,7 +77,7 @@
                     <span class="timeline-point timeline-point-success"></span>
                     <div class="timeline-event">
                       <div class="timeline-header mb-3">
-                        <h6 class="mb-0">{{i.tittle}}</h6>
+                        <h6 class="mb-0">{{i.phoneno}}</h6>
                         <small class="text-body-secondary">Date : </small>
                       </div>
                       <p class="mb-2">{{i.message}}</p>
@@ -105,32 +105,9 @@
                   {% comment %} <div class="bg-label-primary rounded-3 text-center mb-4 pt-6">
                     <img class="img-fluid" src="../../assets/img/illustrations/sitting-girl-with-laptop.png" alt="Card girl image" style="width: 52%;" />
                   </div> {% endcomment %}
-                  <h5 class="mb-2">Upcoming Appointments</h5>
-                  <p>Next Generation Frontend Architecture Using Layout Engine And React Native Web.</p>
-                  <div class="row mb-4 g-3">
-                    <div class="col-6">
-                      <div class="d-flex align-items-center">
-                        <div class="avatar flex-shrink-0 me-3">
-                          <span class="avatar-initial rounded bg-label-primary"><i class="icon-base bx bx-calendar icon-lg"></i></span>
-                        </div>
-                        <div>
-                          <h6 class="mb-0 text-nowrap">{{i.date}}</h6>
-                          <small>{{i.date}}</small>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="d-flex align-items-center">
-                        <div class="avatar flex-shrink-0 me-3">
-                          <span class="avatar-initial rounded bg-label-primary"><i class="icon-base bx bx-time-five icon-lg"></i></span>
-                        </div>
-                        <div>
-                          <h6 class="mb-0 text-nowrap">{{i.time}}</h6>
-                          <small>Duration</small>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <h5 class="mb-2">Appointments</h5>
+                  <p>Message : {{i.message}}</p>
+                  <p>Lawyer : {{i.lid}}</p>
                   <div class="col-12 text-center">
                     <a href="javascript:void(0);" class="btn btn-primary w-100 d-grid">Join the event</a>
                   </div>
