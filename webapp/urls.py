@@ -22,5 +22,5 @@ urlpatterns = [
     path('dsbb', include("userapp.urls")),
     path('dv', include("adminapp.urls")),
     path('', include("clientapp.urls")),
-    path('hjj', include("lawyerapp.urls")),
+    path('dbf', include("lawyerapp.urls")),
 ]

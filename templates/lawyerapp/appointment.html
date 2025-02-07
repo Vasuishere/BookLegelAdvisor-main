@@ -67,7 +67,8 @@
                                                 <tr>
                                                    <th>Client Name</th>
                                                    <th>Case Category</th>
-                                                   <th>Message</th>
+                                                   <th>Contact No.</th>
+                                                   <th>Email</th>
                                                 </tr>
                                              </thead>
                                           {% for i in data %}
@@ -75,7 +76,8 @@
                                                 <tr>
                                                    <td>{{i.name}}</td>
                                                    <td>Doe</td>
-                                                   <td>john@example.com</td>
+                                                   <td>{{i.phoneno}}</td>
+                                                   <td>{{i.email}}</td>
                                                 </tr>
                                              </tbody>
                                           {% endfor %}

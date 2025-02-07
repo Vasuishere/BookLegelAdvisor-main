@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import lawyers
 from adminapp.models import lawyer
 from clientapp.models import clients,messages
 from userapp.models import Appointment
@@ -63,36 +62,9 @@ def appointment(request):
     data = Appointment.objects.filter(lid=lawyer_id)
     return render(request,'lawyerapp/appointment.html',{"data":data})
 
-# def message(request,id):
-#     data = clients.objects.get(id=id)
-#     if request.POST:
-#         msg = request.POST['msg']
-#         title = request.POST['title']
-#         obj = messages(msg=msg,title=title)
-#         obj.save()
-#         return redirect("message",id=id)
-#     return render(request,'lawyerapp/message.html',{"data":data})
-
-# def message(request,id):
-#     lawyer_name = request.session.get('name')
-#     # Fetch lawyer details
-#     try:
-#         data = lawyer.objects.get(name=lawyer_name)
-#     except lawyer.DoesNotExist:
-#         data = None  
-
-#     client = get_object_or_404(clients, id=id)
-#     if request.POST:
-#         title = request.POST.get('title')
-#         msg = request.POST.get('msg')
-#         cname = request.POST.get('client')
-#         obj = messages(title=title,msg=msg,client=cname)
-#         obj.save()
-#         return redirect('/lawyerapp/index')
-
-#     return render(request, 'lawyerapp/message.html',{'data': data,'client':client})
 
 def message(request, id):
+    data1 = messages.objects.filter(lawyer_name_id=request.session["user_id"],client_id=id).all().order_by('-created_at')
     lawyer_name = request.session.get('name')
     
     # Fetch lawyer details
@@ -100,18 +72,17 @@ def message(request, id):
         data = lawyer.objects.get(name=lawyer_name)
     except lawyer.DoesNotExist:
         data = None  
-
     client = get_object_or_404(clients, id=id)  # Get client instance
-
+    lawyer_name = data
     if request.method == "POST":
         title = request.POST.get('title')
         msg = request.POST.get('msg')
 
         # Ensure messages is using the model, not a conflicting module name
-        obj = messages.objects.create(title=title, msg=msg, client=client)
-        return redirect('/lawyerapp/index')
+        obj = messages.objects.create(title=title, msg=msg, client=client, lawyer_name=lawyer_name)
+        return redirect(f'/message/{id}')
 
-    return render(request, 'lawyerapp/message.html', {'data': data, 'client': client})
+    return render(request, 'lawyerapp/message.html', {'data': data, 'client': client,'data1':data1})
 
 
 def demo(request):

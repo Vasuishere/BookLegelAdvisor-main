@@ -11,20 +11,12 @@ class clients(models.Model):
     password = models.CharField(max_length=50)
     def __str__(self):
         return self.name
-    
-# class messages(models.Model):
-#     title = models.CharField(max_length=30)
-#     msg = models.CharField(max_length=1000)
-#     cname = models.CharField(max_length=25)
-#     # client = models.
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     def __str__(self):
-#         return f"{self.sender}send message to {self.client}"
 
 class messages(models.Model):
     title = models.CharField(max_length=30)
     msg = models.CharField(max_length=1000)
-    client = models.ForeignKey('clients', on_delete=models.CASCADE)  # Correct client reference
+    client = models.ForeignKey('clients', on_delete=models.CASCADE)
+    lawyer_name = models.ForeignKey(lawyer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

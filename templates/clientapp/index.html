@@ -68,34 +68,34 @@
             <!-- Activity Timeline -->
             <div class="card card-action mb-6 ms-4 mt-3 col-8" >
               <div class="card-header align-items-center">
-                <h5 class="card-action-title mb-0"><i class="icon-base bx bx-bar-chart-alt-2 icon-lg text-body me-4"></i>New Messages</h5>
+                <h5 class="card-action-title mb-0 text-dark fw-bold"><i class="icon-base bx bx-bar-chart-alt-2 icon-lg text-body me-4 "></i>New Messages</h5>
               </div>
               <div class="card-body pt-3">
+                {% for i in msg %}
                 <ul class="timeline mb-0">
-                  {% for i in data %}
                   <li class="timeline-item timeline-item-transparent">
                     <span class="timeline-point timeline-point-success"></span>
                     <div class="timeline-event">
                       <div class="timeline-header mb-3">
-                        <h6 class="mb-0">{{i.phoneno}}</h6>
-                        <small class="text-body-secondary">Date : </small>
+                        <h6 class="mb-0 fs-5">Tittle : {{i.title}}</h6>
+                        <small class="text-body-secondary ">Date : </small>
                       </div>
-                      <p class="mb-2">{{i.message}}</p>
+                      <p class="mb-1 fs-6">Message : {{i.msg}}</p>
                       <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
                         <div class="d-flex flex-wrap align-items-center mb-50">
                           <div class="avatar avatar-sm me-3">
                             <img src="{% static 'clientapp/assets/img/avatars/1.png'%}" alt="Avatar" class="rounded-circle" />
                           </div>
-                          <div>
-                            <p class="mb-0 small fw-medium">{{i.sender}}</p>
-                            <small>CEO of ThemeSelection</small>
+                          <div class="mb-4">
+                            <p class="mb-0 small fw-medium">Lawyer</p>
+                            <small>{{i.lawyer_name}}</small>
                           </div>
                         </div>
                       </div>
                     </div>
                   </li>
-                  {% endfor %}
                 </ul>
+                {% endfor %}
               </div>
             </div>
             {% for i in data1 %}

@@ -1,123 +1,80 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-  <head>
-    <!-- basic -->
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- mobile metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
-    <!-- site metas -->
     <title>Lawyer - Admin Panel</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <!-- site icon -->
     <link rel="icon" href="images/fevicon.png" type="image/png" />
-    <!-- bootstrap css -->
-    <link
-      rel="stylesheet"
-      href="{% static 'lawyerapp/css/bootstrap.min.css'%}"
-    />
-    <!-- site css -->
+    <link rel="stylesheet" href="{% static 'lawyerapp/css/bootstrap.min.css'%}" />
     <link rel="stylesheet" href="{% static 'lawyerapp/style.css'%}" />
-    <!-- responsive css -->
     <link rel="stylesheet" href="{% static 'lawyerapp/css/responsive.css'%}" />
-    <!-- color css -->
     <link rel="stylesheet" href="{% static 'lawyerapp/css/colors.css'%}" />
-    <!-- select bootstrap -->
-    <link
-      rel="stylesheet"
-      href="{% static 'lawyerapp/css/bootstrap-select.css'%}"
-    />
-    <!-- scrollbar css -->
-    <link
-      rel="stylesheet"
-      href="{% static 'lawyerapp/css/perfect-scrollbar.css'%}"
-    />
-    <!-- custom css -->
     <link rel="stylesheet" href="{% static 'lawyerapp/css/custom.css'%}" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body class="dashboard dashboard_1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+</head>
+<body class="dashboard dashboard_1">
     <div class="full_container">
-      <div class="inner_container">
-        <!-- Sidebar  -->
-        {% include 'lawyerapp/sidebar.html' %}
-        <!-- end sidebar -->
-        <!-- right content -->
-        <div id="content">
-          <!-- topbar -->
-          {% include 'lawyerapp/top.html' %}
-          <!-- end topbar -->
-          <!-- dashboard inner -->
-          <form method="POST" action="">
-            {% csrf_token %}
-            <h2 class="text-align center mt-4 text">Send Message {{data.client}}</h2>
-            <div class="mb-3 mt-3">
-                <input type="text" class="form-control border-brown" placeholder="Subject" name="title" />
+        <div class="inner_container">
+            {% include 'lawyerapp/sidebar.html' %}
+            <div id="content">
+                {% include 'lawyerapp/top.html' %}
+                <div class="container mt-4">
+                    <div class="row">
+                        <!-- Left Side: Send Message Form -->
+                        <div class="col-md-5 me-5">
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                            <h3 class="text-center mb-4 text-uppercase">Send Message</h3>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control border-brown" placeholder="Type Here : Subject" name="title" />
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control border-brown" rows="5" placeholder="Your Message " name="msg"></textarea>
+                                </div>
+                                <input type="hidden" name="client" value="{{ client.id }}" />
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-brown">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Right Side: Chat History -->
+                        <div class="col-md-6 ms-auto">
+                            <h3 class="text-center mb-4">Chat History</h3>
+                            <div class="chat-history">
+                                {% for i in data1 %}
+                                <div class="card mb-3 custom-card-body">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-2" style="gap: 10px;">
+                                            <div class="bg-primary rounded-circle text-white text-center" style="width: 40px; height: 40px; line-height: 40px;">V</div>
+                                            <div class="ms-3">
+                                                <p class="mb-0 text-muted small">To: {{i.client}}</p>
+                                                <h6 class="mb-0">{{i.title}}</h6>
+                                            </div>
+                                            <small class="text-muted ms-auto">10:30 AM</small>
+                                        </div>
+                                        <p class="mb-0">{{i.msg}}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .custom-card-body { background-color: rgb(210, 214, 218); border-radius: 10px; }
+                    .border-brown { border: 1px solid brown; }
+                    .btn-brown { background-color: brown; color: white; }
+                    .btn-brown:hover { background-color: darkbrown; }
+                </style>
             </div>
-            <div class="mb-3 mt-3">
-                <textarea class="form-control border-brown" rows="5" placeholder="Type Here" name="msg"></textarea>
-            </div>
-            
-            <div class="mb-3 mt-3">
-              <input type="hidden" name="client" value="{{ client.id }}" />
-
-                <textarea class="form-control border-brown" rows="5" value="{{data.cname}}" name="client" readonly></textarea>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-brown">Submit</button>
-            </div>
-        </form>
-        
-          <style>
-            .text-brown {
-              color: brown;
-            }
-            .border-brown {
-              border: 1px solid brown;
-            }
-            .btn-brown {
-              background-color: brown;
-              color: white;
-            }
-            .btn-brown:hover {
-              background-color: darkbrown;
-            }
-          </style>
-
-          <!-- end dashboard inner -->
         </div>
-      </div>
     </div>
-    <!-- jQuery -->
     <script src="{% static 'lawyerapp/js/jquery.min.js'%}"></script>
     <script src="{% static 'lawyerapp/js/popper.min.js'%}"></script>
     <script src="{% static 'lawyerapp/js/bootstrap.min.js'%}"></script>
-    <!-- wow animation -->
-    <script src="{% static 'lawyerapp/js/animate.js'%}"></script>
-    <!-- select country -->
-    <script src="{% static 'lawyerapp/js/bootstrap-select.js'%}"></script>
-    <!-- owl carousel -->
-    <script src="{% static 'lawyerapp/js/owl.carousel.js'%}"></script>
-    <!-- chart js -->
-    <script src="{% static 'lawyerapp/js/Chart.min.js'%}"></script>
-    <script src="{% static 'lawyerapp/js/Chart.bundle.min.js'%}"></script>
-    <script src="{% static 'lawyerapp/js/utils.js'%}"></script>
-    <script src="{% static 'lawyerapp/js/analyser.js'%}"></script>
-    <!-- nice scrollbar -->
-    <script src="{% static 'lawyerapp/js/perfect-scrollbar.min.js'%}"></script>
-    <script>
-      var ps = new PerfectScrollbar("#sidebar");
-    </script>
-    <!-- custom js -->
     <script src="{% static 'lawyerapp/js/custom.js'%}"></script>
-    <script src="{% static 'lawyerapp/js/chart_custom_style1.js'%}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-  </body>
+</body>
 </html>

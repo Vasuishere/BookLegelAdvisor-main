@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
-from .models import clients
+from .models import clients,messages
 from userapp.models import Appointment
 
 # Create your views here.
 def index(request):
-    data1 = Appointment.objects.filter(userid=request.session["user_id"]).all()  # ✅ Corrected
-    return render(request, 'clientapp/index.html', {"data1": data1})
+    data1 = Appointment.objects.filter(userid=request.session["user_id"]).all()
+    msg = messages.objects.filter(client=request.session["user_id"]).all()
+    return render(request, 'clientapp/index.html', {"data1": data1,"msg":msg})
 
 
 def login_view(request):
