@@ -93,9 +93,9 @@
                         <div class="me-1">
                           <h5 class="mb-0">Case Details</h5>
                           <p class="mb-0">
-                            Lawyer : 
+                            Client Name : 
                             <span class="fw-medium text-heading">
-                              Lawyer Name
+                              {{appData.name}}
                             </span>
                           </p>
                         </div>
@@ -131,7 +131,7 @@
                                 <i
                                   class="icon-base bx bx-globe me-2 align-bottom"
                                 ></i
-                                >Languages: English
+                                >Email : {{appData.email}}
                               </p>
                               <p class="text-nowrap mb-0">
                                 <i
@@ -145,7 +145,7 @@
                                 <i
                                   class="icon-base bx bx-video me-2 align-top ms-50"
                                 ></i
-                                >Lectures: 19
+                                >Phone No : {{appData.phoneno}}
                               </p>
                               <p class="text-nowrap mb-0">
                                 <i
@@ -158,29 +158,16 @@
                           <hr class="my-6" />
                           <h5>Description</h5>
                           <p class="mb-6">
-                            The material of this course is also covered in my
-                            other course about web design and development with
-                            HTML5 & CSS3. Scroll to the bottom of this page to
-                            check out that course, too! If you're already taking
-                            my other course, you already have all it takes to
-                            start designing beautiful websites today!
+                            Type Here
                           </p>
                           <p class="mb-6">
-                            "Best web design course: If you're interested in web
-                            design, but want more than just a "how to use
-                            WordPress" course,I highly recommend this one." —
-                            Florian Giusti
+                            {{appData.message}}
                           </p>
                           <p>
-                            "Very helpful to us left-brained people: I am
-                            familiar with HTML, CSS, JQuery, and Twitter
-                            Bootstrap, but I needed instruction in web design.
-                            This course gave me practical, impactful techniques
-                            for making websites more beautiful and engaging." —
-                            Susan Darlene Cain
+                            Type Here
                           </p>
                           <hr class="my-6" />
-                          <h5>Instructor</h5>
+                          <h5>Lawyer Name </h5>
                           <div
                             class="d-flex justify-content-start align-items-center user-name"
                           >
@@ -194,7 +181,7 @@
                               </div>
                             </div>
                             <div class="d-flex flex-column">
-                              <h6 class="mb-1">Lawyer Name </h6>
+                              <h6 class="mb-1">{{lawyerdata.name}} </h6>
                               <small
                                 >Criminal Cases, High Court</small
                               >

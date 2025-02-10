@@ -32,10 +32,20 @@ def index(request):
 def virtualappointment(request):
     return render(request,'lawyerapp/virtualappointment.html')
 
+
 def profile(request):
-    email = request.session.get("email")
-    data = lawyer.objects.filter(email=email).first()
-    return render(request,'lawyerapp/profile.html',{"data":data})
+    if request.session.get('islawyerlogin'):
+        lawyer_name = request.session.get('name')  
+        try:
+            lawyer_obj = lawyer.objects.get(name=lawyer_name)  # Fetch lawyer by name
+        except lawyer.DoesNotExist:
+            return redirect('login')  # Redirect if lawyer does not exist
+        
+        context = {'lawyer': lawyer_obj}
+        return render(request, 'lawyerapp/profile.html', context)
+
+    return redirect('login')  # Redirect if not logged in
+
 
 def profile_update(request,id):
     lawyer_instance = get_object_or_404(lawyer, id=id)

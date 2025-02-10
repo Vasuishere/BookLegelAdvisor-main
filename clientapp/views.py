@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
 from .models import clients,messages
 from userapp.models import Appointment
+from adminapp.models import lawyer
 
 # Create your views here.
 def index(request):
+    lawyer_id = request.session.get("lawyer_id")
     data1 = Appointment.objects.filter(userid=request.session["user_id"]).all()
-    msg = messages.objects.filter(client=request.session["user_id"]).all()
+    msg = messages.objects.filter(client=request.session["user_id"],lawyer_name=lawyer_id).order_by('-created_at')[:3]
     return render(request, 'clientapp/index.html', {"data1": data1,"msg":msg})
 
 
@@ -15,11 +17,12 @@ def login_view(request):
     if request.POST:
         name = request.POST['name']
         password = request.POST['password']
-        client = clients.objects.filter(name=name,password=password).values('id').first()
+        client = clients.objects.filter(name=name,password=password).values('id','lid').first()
         if client != None:
             request.session['isclientlogin'] = True
             request.session['name'] = name
             request.session['user_id'] = client['id']
+            request.session['lawyer_id'] = client['lid']
             return redirect('/index')
         else :
             return render(request,'clientapp/login.html',{'error':'Invalid username or password'})
@@ -58,7 +61,11 @@ def appointment(request):
 
 
 def details(request):
-    return render(request,'clientapp/details.html')
+    userId = request.session.get('user_id')
+    appData = Appointment.objects.filter(userid=userId).values('name','message','lid_id','email','phoneno').first()
+    if appData is not None:
+        lawyerdata = lawyer.objects.filter(id=appData['lid_id']).values('name').first()
+        return render(request,'clientapp/details.html',{'appData':appData,'lawyerdata':lawyerdata})
 
 def instruction(request):
     return render(request,'clientapp/instruction.html')
