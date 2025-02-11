@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('fsdvs', include("userapp.urls")),
     path('dbs', include("adminapp.urls")),
-    path('dv', include("clientapp.urls")),
+    path('sv', include("clientapp.urls")),
     path('', include("lawyerapp.urls")),
 ]

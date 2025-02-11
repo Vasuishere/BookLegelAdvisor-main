@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from adminapp.models import lawyer
+from adminapp.models import lawyer,Education
 from clientapp.models import clients,messages
 from userapp.models import Appointment
 from adminapp.forms import update_lawyer_profile
@@ -34,17 +34,10 @@ def virtualappointment(request):
 
 
 def profile(request):
-    if request.session.get('islawyerlogin'):
-        lawyer_name = request.session.get('name')  
-        try:
-            lawyer_obj = lawyer.objects.get(name=lawyer_name)  # Fetch lawyer by name
-        except lawyer.DoesNotExist:
-            return redirect('login')  # Redirect if lawyer does not exist
-        
-        context = {'lawyer': lawyer_obj}
-        return render(request, 'lawyerapp/profile.html', context)
-
-    return redirect('login')  # Redirect if not logged in
+    name = request.session['user_id']
+    profile = lawyer.objects.filter(name=name).values('name','email').first
+    education = Education.objects.filter(lawyer=name).values('degree').first
+    return render(request,'lawyerapp/profile.html',{'profile':profile,'education':education})
 
 
 def profile_update(request,id):

@@ -37,21 +37,21 @@
                                             <div class="col-lg-12">
                                                 <div class="full dis_flex center_text">
                                                     <div class="profile_img">
-                                                        <img width="180" class="rounded-circle" 
-                                                             src="{{ lawyer.profile.image.url }}" alt="Lawyer Image"/>
+                                                        <img width="100" class="rounded-circle" 
+                                                        src="{% static 'lawyerapp/images/layout_img/user_img.jpg'%}" alt="Lawyer Image"/>
                                                     </div>
                                                     <div class="profile_contant">
                                                         <div class="contact_inner">
-                                                            <h3>{{ lawyer.name }}</h3>
-                                                            <p><strong>Experience Year: </strong>{{ lawyer.company }}</p>
-                                                            <p><strong>Age: </strong>{{ lawyer.age }}</p>
+                                                            <h3>{{profile.name}}</h3>
+                                                            <p><strong>Experience Year: </strong>{{education.degree}}</p>
+                                                            <p><strong>Age: </strong>40</p>
                                                             <ul class="list-unstyled">
-                                                                <li><i class="fa fa-envelope-o"></i> {{ LawyerProfile.email }}</li>
-                                                                <li><i class="fa fa-phone"></i> {{ lawyer.phone_number }}</li>
+                                                                <li><i class="fa fa-envelope-o"></i> Vaibhav600080@gmail.com    </li>
+                                                                <li><i class="fa fa-phone"></i> 8866495685</li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>                                                
                                                 <div class="full inner_elements margin_top_30">
                                                     <div class="tab_style2">
                                                         <div class="tabbar">
@@ -68,16 +68,15 @@
                                                             <div class="tab-content" id="nav-tabContent">
                                                                 <div class="tab-pane fade show active" id="education" role="tabpanel">
                                                                     <ul>
-                                                                        {% for edu in lawyer.profile.education_set.all %}
-                                                                        <li>{{ edu.degree }} from {{ edu.institution }} ({{ edu.year }})</li>
-                                                                        {% endfor %}
+                                                                        <li>LLB from Delhi University (2000)</li>
+                                                                        <li>LLB from Delhi University (2000)</li>
+                                                                        <li>LLB from Delhi University (2000)</li>
                                                                     </ul>
                                                                 </div>
                                                                 <div class="tab-pane fade" id="experience" role="tabpanel">
                                                                     <ul>
-                                                                        {% for exp in lawyer.profile.experience_set.all %}
-                                                                        <li>{{ exp.position }} at {{ exp.company }} ({{ exp.year }})</li>
-                                                                        {% endfor %}
+                                                                        <li>LLB from Delhi University (2000)</li>
+                                                                        <li>LLB from Delhi University (2000)</li>
                                                                     </ul>
                                                                 </div>
                                                                 <div class="tab-pane fade" id="contact" role="tabpanel">
