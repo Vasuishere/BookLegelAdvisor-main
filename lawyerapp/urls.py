@@ -29,6 +29,7 @@ urlpatterns = [
     path('message/<int:id>/', views.message, name='message'),
     path('activeclient', views.activeclient),
     path('index', views.index),
+    path('forgotpassword', views.forgotpassword),
     path('', views.login_lawyer),
     path('logout', views.logout),
 ]

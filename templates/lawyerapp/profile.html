@@ -1,112 +1,193 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Lawyer Profile</title>
-    <link rel="stylesheet" href="{% static 'lawyerapp/css/bootstrap.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'lawyerapp/style.css' %}"/>
-</head>
-<body class="dashboard">
+    <link
+      rel="stylesheet"
+      href="{% static 'lawyerapp/css/bootstrap.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'lawyerapp/style.css' %}" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="dashboard">
     <div class="full_container">
-        <div class="inner_container">
-            {% include 'lawyerapp/sidebar.html' %}
-            <div id="content">
-                {% include 'lawyerapp/top.html' %}
-                <div class="midde_cont">
-                    <div class="container-fluid">
-                        <div class="row column_title">
-                            <div class="col-md-12">
-                                <div class="page_title">
-                                    <h2>Profile</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row column1">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8">
-                                <div class="white_shd full margin_bottom_30">
-                                    <div class="full graph_head">
-                                        <div class="heading1 margin_0">
-                                            <h2>User Profile</h2>
-                                        </div>
-                                    </div>
-                                    <div class="full price_table padding_infor_info">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="full dis_flex center_text">
-                                                    <div class="profile_img">
-                                                        <img width="100" class="rounded-circle" 
-                                                        src="{% static 'lawyerapp/images/layout_img/user_img.jpg'%}" alt="Lawyer Image"/>
-                                                    </div>
-                                                    <div class="profile_contant">
-                                                        <div class="contact_inner">
-                                                            <h3>{{profile.name}}</h3>
-                                                            <p><strong>Experience Year: </strong>{{education.degree}}</p>
-                                                            <p><strong>Age: </strong>40</p>
-                                                            <ul class="list-unstyled">
-                                                                <li><i class="fa fa-envelope-o"></i> Vaibhav600080@gmail.com    </li>
-                                                                <li><i class="fa fa-phone"></i> 8866495685</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>                                                
-                                                <div class="full inner_elements margin_top_30">
-                                                    <div class="tab_style2">
-                                                        <div class="tabbar">
-                                                            <nav>
-                                                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                                    <a class="nav-item nav-link active" id="nav-edu-tab"
-                                                                       data-toggle="tab" href="#education" role="tab">Education</a>
-                                                                    <a class="nav-item nav-link" id="nav-exp-tab"
-                                                                       data-toggle="tab" href="#experience" role="tab">Work Experience</a>
-                                                                    <a class="nav-item nav-link" id="nav-contact-tab"
-                                                                       data-toggle="tab" href="#contact" role="tab">Contact</a>
-                                                                </div>
-                                                            </nav>
-                                                            <div class="tab-content" id="nav-tabContent">
-                                                                <div class="tab-pane fade show active" id="education" role="tabpanel">
-                                                                    <ul>
-                                                                        <li>LLB from Delhi University (2000)</li>
-                                                                        <li>LLB from Delhi University (2000)</li>
-                                                                        <li>LLB from Delhi University (2000)</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="experience" role="tabpanel">
-                                                                    <ul>
-                                                                        <li>LLB from Delhi University (2000)</li>
-                                                                        <li>LLB from Delhi University (2000)</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="contact" role="tabpanel">
-                                                                    <p>Email: {{ lawyer.profile.email }}</p>
-                                                                    <p>Phone: {{ lawyer.profile.phone_number }}</p>
-                                                                    <p>Website: <a href="{{ lawyer.profile.website }}">{{ lawyer.profile.website }}</a></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="footer">
-                            <p>© 2025 Designed by YourName. All rights reserved.</p>
-                        </div>
-                    </div>
+      <div class="inner_container">
+        {% include 'lawyerapp/sidebar.html' %}
+        <div id="content">
+          {% include 'lawyerapp/top.html' %}
+          <div class="midde_cont">
+            <div class="container-fluid">
+              <div class="row column_title">
+                <div class="col-md-12">
+                  <div class="page_title">
+                    <h2>Profile</h2>
+                  </div>
                 </div>
+              </div>
+              <div class="row column1">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                  <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                      <div class="heading1 margin_0">
+                        <h2>User Profile</h2>
+                      </div>
+                    </div>
+                    <div class="full price_table padding_infor_info">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="full dis_flex center_text">
+                            <div class="profile_img">
+                              <img
+                                width="100"
+                                class="rounded-circle"
+                                src="{% static 'lawyerapp/images/layout_img/user_img.jpg'%}"
+                                alt="Lawyer Image"
+                              />
+                            </div>
+                            <div class="profile_contant">
+                              <div class="contact_inner">
+                                <h3>{{profile.name}}</h3>
+                                <p><strong>Experience Year: </strong>test</p>
+                                <p><strong>Age: </strong>40</p>
+                                <ul class="list-unstyled">
+                                  <li>
+                                    <i class="fa fa-envelope-o"></i>
+                                    Vaibhav600080@gmail.com
+                                  </li>
+                                  <li>
+                                    <i class="fa fa-phone"></i> 8866495685
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="full inner_elements margin_top_30">
+                            <div class="tab_style2">
+                              <div class="tabbar">
+                                <nav>
+                                  <div
+                                    class="nav nav-tabs"
+                                    id="nav-tab"
+                                    role="tablist"
+                                  >
+                                    <a
+                                      class="nav-item nav-link active"
+                                      id="nav-edu-tab"
+                                      data-toggle="tab"
+                                      href="#education"
+                                      role="tab"
+                                      >Education</a
+                                    >
+                                    <a
+                                      class="nav-item nav-link"
+                                      id="nav-exp-tab"
+                                      data-toggle="tab"
+                                      href="#experience"
+                                      role="tab"
+                                      >Work Experience</a
+                                    >
+                                  </div>
+                                </nav>
+                                <div class="tab-content" id="nav-tabContent">
+                                  <div
+                                    class="tab-pane fade show active"
+                                    id="education"
+                                    role="tabpanel"
+                                  >
+                                  <div class="container mt-4">
+                                    {% for edu in education%}
+                                      <div class="d-flex mb-4">
+                                        <div
+                                          class="education-border me-3 mr-3"
+                                        ></div>
+                                        <div>
+                                          <h5 class="mb-1">{{edu.degree}}</h5>
+                                          <p class="text-muted mb-0">
+                                            College : {{edu.institution}}
+                                          </p>
+                                          <p class="text-muted mb-0">
+                                            Expertise : {{edu.expertise}}
+                                          </p>
+                                        </div>
+                                      </div>
+                                      {% endfor %}
+                                    </div>
+                                    <style>
+                                      .education-border {
+                                        width: 4px;
+                                        background-color: #007bff; /* Blue color */
+                                      }
+                                    </style>
+                                  </div>
+                                  <div
+                                    class="tab-pane fade"
+                                    id="experience"
+                                    role="tabpanel"
+                                  >
+                                    {% for exp in experience %}
+                                    <div class="container mt-4">
+                                      <div class="d-flex">
+                                        <div
+                                          class="education-border me-3 mr-3"
+                                        ></div>
+                                        <div>
+                                          <h5 class="mb-1">
+                                            {{exp.Court}}
+                                          </h5>
+                                          <p class="text-muted mb-0">
+                                            Start From : {{ exp.start_date }}<br>
+                                            {% if exp.end_date %}
+                                            End At : {{ exp.end_date }}
+                                            {% else %}
+                                                Now : Currently Working
+                                            {% endif %}
+                                        </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {% endfor %}
+                                    <style>
+                                      h5,
+                                      .education-border {
+                                        text-transform: none !important;
+                                        border-radius: 10px;
+                                      }
+                                      .education-border {
+                                        width: 4px;
+                                        background-color: #007bff; /* Blue color */
+                                      }
+                                    </style>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2"></div>
+                </div>
+              </div>
             </div>
+            <div class="container-fluid">
+              <div class="footer">
+                <p>© 2025 Designed by YourName. All rights reserved.</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <script src="{% static 'lawyerapp/js/jquery.min.js' %}"></script>
     <script src="{% static 'lawyerapp/js/bootstrap.min.js' %}"></script>
-</body>
+  </body>
 </html>

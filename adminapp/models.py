@@ -24,5 +24,16 @@ class Education(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     
+    class Meta:
+        ordering = ['-end_date']
     def __str__(self):
-        return f"Education - {self.lawyer}"
+        return f"Education - {self.lawyer} - Degree Of -{self.degree}"
+    
+class Work_experience(models.Model):
+    lawyer = models.ForeignKey(lawyer, on_delete=models.CASCADE, related_name="work_experiences")
+    Court = models.CharField(max_length=100)
+    Specialization = models.CharField(max_length=100)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    def __str__(self):
+        return f"Experience Of - {self.lawyer}"

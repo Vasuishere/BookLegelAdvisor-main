@@ -1,8 +1,11 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from adminapp.models import lawyer,Education
+from adminapp.models import lawyer,Education,Work_experience
 from clientapp.models import clients,messages
 from userapp.models import Appointment
 from adminapp.forms import update_lawyer_profile
+import random
+from django.core.mail import send_mail
+from django.conf import settings
 
 def login_lawyer(request):
     if request.session.get("islawyerlogin"):
@@ -35,9 +38,10 @@ def virtualappointment(request):
 
 def profile(request):
     name = request.session['user_id']
-    profile = lawyer.objects.filter(name=name).values('name','email').first
-    education = Education.objects.filter(lawyer=name).values('degree').first
-    return render(request,'lawyerapp/profile.html',{'profile':profile,'education':education})
+    profile = lawyer.objects.filter(id=name).values('name','email').first
+    education = Education.objects.filter(lawyer=name).values('degree','institution','expertise').order_by('end_date').all()
+    experience = Work_experience.objects.filter(lawyer=name).values('Court','start_date','end_date').all()
+    return render(request,'lawyerapp/profile.html',{'profile':profile,'education':education,'experience':experience})
 
 
 def profile_update(request,id):
@@ -80,13 +84,49 @@ def message(request, id):
     if request.method == "POST":
         title = request.POST.get('title')
         msg = request.POST.get('msg')
-
-        # Ensure messages is using the model, not a conflicting module name
         obj = messages.objects.create(title=title, msg=msg, client=client, lawyer_name=lawyer_name)
         return redirect(f'/message/{id}')
-
     return render(request, 'lawyerapp/message.html', {'data': data, 'client': client,'data1':data1})
 
 
+def forgotpassword(request):
+    if request.method == 'POST':
+        user_email = request.POST['email']
+        try:
+            # Find the lawyer with the given email
+            lawyer_obj = lawyer.objects.get(email=user_email)
+            
+            # Generate and save random password
+            random_no = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+            lawyer_obj.password = random_no
+            lawyer_obj.save()
+            
+            # Create email message with proper formatting
+            message = f"""
+Dear User,
+
+Here is your temporary password: {random_no}
+
+Please use this password to login to your account. We recommend changing your password after logging in.
+
+Thanks for reaching us!
+
+Best regards,
+From Admin Team
+"""
+            
+            # Send email
+            subject = 'Reset Password'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [user_email]
+            send_mail(subject, message, email_from, recipient_list)
+            return redirect('/')
+        except lawyer.DoesNotExist:
+            # Handle case when email doesn't exist
+            return render(request, "lawyerapp/forgotpassword.html", {'error': 'Email not found'})
+            
+    return render(request, "lawyerapp/forgotpassword.html")
+
 def demo(request):
-    return render(request,'lawyerapp/demo.html')
+    random_no = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+    return render(request,'lawyerapp/demo.html', {'random': random_no})

@@ -201,26 +201,6 @@ def client(request):
     data = clients.objects.all()
     return render(request,'adminapp/clients.html',{"data":data})
 
-# def add_new_client(request):
-#     if request.method == 'POST':  
-#         form = add_clients_forms(request.POST)  
-#         if form.is_valid():  
-#             form.save()  
-#             return redirect('/clients')  
-#     else:
-#         form = add_lawyer()  
-#     return render(request, 'adminapp/add_lawyer.html', {'form': form})
-
-# def edit_client(request,id):
-#     client_instance = get_object_or_404(clients, pk=id)
-#     if request.method == 'POST':
-#         form = add_clients_forms(request.POST, request.FILES, instance=client_instance)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/lawyer')
-#     else:
-#         form = add_lawyer(instance=client_instance)
-#     return render(request, 'adminapp/add_lawyer.html', {'form': form})
 
 def add_or_edit_client(request, pk=None):
     instance = get_object_or_404(clients, pk=pk) if pk else None
@@ -252,6 +232,8 @@ def edit_lawyer(request,id):
     else:
         form = add_lawyer(instance=lawyer_instance)
     return render(request, 'adminapp/add_lawyer.html', {'form': form})
+
+
 
 def demo(request):
     return render(request,'adminapp/demo.html')
