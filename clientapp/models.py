@@ -18,6 +18,5 @@ class messages(models.Model):
     client = models.ForeignKey('clients', on_delete=models.CASCADE)
     lawyer_name = models.ForeignKey(lawyer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return f"Message from {self.client}"

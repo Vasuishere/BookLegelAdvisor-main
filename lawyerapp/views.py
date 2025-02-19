@@ -85,6 +85,7 @@ def message(request, id):
         title = request.POST.get('title')
         msg = request.POST.get('msg')
         obj = messages.objects.create(title=title, msg=msg, client=client, lawyer_name=lawyer_name)
+        breakpoint()
         return redirect(f'/message/{id}')
     return render(request, 'lawyerapp/message.html', {'data': data, 'client': client,'data1':data1})
 
