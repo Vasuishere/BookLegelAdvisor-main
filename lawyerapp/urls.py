@@ -25,6 +25,7 @@ urlpatterns = [
     path('virtualappointment', views.virtualappointment),
     path('appointment', views.appointment),
     path('profile', views.profile),
+    path('changepassword', views.changepassword),
     path('profile_update', views.profile_update),
     path('message/<int:id>/', views.message, name='message'),
     path('activeclient', views.activeclient),

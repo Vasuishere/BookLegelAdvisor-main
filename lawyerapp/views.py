@@ -38,10 +38,10 @@ def virtualappointment(request):
 
 def profile(request):
     name = request.session['user_id']
-    profile = lawyer.objects.filter(id=name).values('name','email').first
-    education = Education.objects.filter(lawyer=name).values('degree','institution','expertise').order_by('end_date').all()
+    prof_ile = lawyer.objects.filter(id=name).values('name','email').first
+    education = Education.objects.filter(lawyer=name).values('degree','institution','expertise','start_date','end_date').all().order_by('-end_date')
     experience = Work_experience.objects.filter(lawyer=name).values('Court','start_date','end_date').all()
-    return render(request,'lawyerapp/profile.html',{'profile':profile,'education':education,'experience':experience})
+    return render(request,'lawyerapp/profile.html',{'profile':prof_ile,'education':education,'experience':experience})
 
 
 def profile_update(request,id):
@@ -93,40 +93,24 @@ def forgotpassword(request):
     if request.method == 'POST':
         user_email = request.POST['email']
         try:
-            # Find the lawyer with the given email
             lawyer_obj = lawyer.objects.get(email=user_email)
-            
-            # Generate and save random password
             random_no = ''.join([str(random.randint(0, 9)) for _ in range(6)])
             lawyer_obj.password = random_no
             lawyer_obj.save()
-            
-            # Create email message with proper formatting
-            message = f"""
-Dear User,
-
-Here is your temporary password: {random_no}
-
-Please use this password to login to your account. We recommend changing your password after logging in.
-
-Thanks for reaching us!
-
-Best regards,
-From Admin Team
-"""
-            
-            # Send email
+            message = f"Dear User,Here is your temporary password: {random_no}Please use this password to login to your account. We recommend changing your password after logging in.Thanks for reaching us!Best regards,From Admin Team"
             subject = 'Reset Password'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user_email]
             send_mail(subject, message, email_from, recipient_list)
             return redirect('/')
         except lawyer.DoesNotExist:
-            # Handle case when email doesn't exist
             return render(request, "lawyerapp/forgotpassword.html", {'error': 'Email not found'})
             
     return render(request, "lawyerapp/forgotpassword.html")
 
+def changepassword(request):
+    return render(request,"lawyerapp/changepassword.html")
+
 def demo(request):
-    random_no = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+    random_no = ''.join([str(random.randint(0, 9)) for _ in range(8)])
     return render(request,'lawyerapp/demo.html', {'random': random_no})
