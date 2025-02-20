@@ -37,10 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'userapp',
     'adminapp',
     'lawyerapp',
     'clientapp',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -51,8 +56,42 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+
+SITE_ID = 1
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'APP': {
+            'client_id': '420108195785-l8pld2uqov6oerlvih4i3au11mp4mp46.apps.googleusercontent.com',
+            'secret': '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',
+        },
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        # Add this callback URL configuration to match what's in your Google Console
+        'CALLBACK_URL': 'http://127.0.0.1:8000/accounts/google/login/callback/'
+    }
+}
+
+
+LOGIN_REDIRECT_URL = '/google-login-callback/'
+LOGOUT_REDIRECT_URL = '/#'
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
 ROOT_URLCONF = 'webapp.urls'
 
@@ -139,3 +178,4 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'devanshlohiya234@gmail.com'
 EMAIL_HOST_PASSWORD = 'nauw awju yuet pvph'
+

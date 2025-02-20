@@ -6,6 +6,8 @@ from adminapp.forms import update_lawyer_profile
 import random
 from django.core.mail import send_mail
 from django.conf import settings
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.decorators import login_required
 
 def login_lawyer(request):
     if request.session.get("islawyerlogin"):
@@ -32,6 +34,30 @@ def index(request):
     data = Appointment.objects.filter(lid=lawyer_id)
     return render(request, 'lawyerapp/index.html',{"data":data})
 
+@login_required
+def google_login_callback(request):
+    try:
+        social_account = SocialAccount.objects.filter(user=request.user).first()
+        if social_account:
+            # Get or create lawyer profile using Google email
+            lawyer_data = lawyer.objects.filter(email=request.user.email).first()
+            if lawyer_data:
+                # Explicitly convert id to string to ensure proper session storage
+                request.session['islawyerlogin'] = True
+                request.session['user_id'] = str(lawyer_data.id)
+                request.session['name'] = str(lawyer_data.name)
+                request.session['email'] = str(request.user.email)
+                # Force session save
+                request.session.modified = True
+                return redirect("/index")
+            else:
+                # Handle case where lawyer doesn't exist
+                messages.error(request, "No lawyer account found with this email")
+                return redirect("/")
+    except Exception as e:
+        messages.error(request, "Error during Google login")
+        return redirect("/")
+    
 def virtualappointment(request):
     return render(request,'lawyerapp/virtualappointment.html')
 

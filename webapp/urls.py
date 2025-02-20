@@ -23,4 +23,5 @@ urlpatterns = [
     path('dbs', include("adminapp.urls")),
     path('dvs', include("clientapp.urls")),
     path('', include("lawyerapp.urls")),
+    path('accounts/', include('allauth.urls')),
 ]
