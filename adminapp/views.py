@@ -18,7 +18,7 @@ def Show_Appointment(request):
 
 def login(request):
     if request.session.get("isadminlogin"):
-        return redirect("index")
+        return redirect("adminapp/index")
     if request.POST:
         name = request.POST["name"]
         password = request.POST["password"]
@@ -27,12 +27,12 @@ def login(request):
             request.session['isadminlogin'] = True
             request.session['name'] = name
             # request.session['user_id'] = user.id
-            return redirect("/index")
+            return redirect("adminapp/index")
     return render(request,'adminapp/login.html')
 
 def logout(request):
     del request.session["isadminlogin"]
-    return redirect("/")
+    return redirect("/adminapp")
 
 def blog(request):
     data = Blog.objects.all
@@ -43,7 +43,7 @@ def add_blog(request):
         form = blog_edit_Form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('/blog')
+            return redirect('/adminapp/blog')
     else:
         form = blog_edit_Form()
     return render(request, 'adminapp/add_blog.html', {'form': form})
@@ -54,14 +54,14 @@ def edit_blog(request, id):
         form = blog_edit_Form(request.POST, request.FILES, instance=blog)
         if form.is_valid():
             form.save()
-            return redirect('/blog')
+            return redirect('/adminapp/blog')
     else:
         form = blog_edit_Form(instance=blog)
     return render(request, 'adminapp/add_blog.html', {'form': form})
 
 def delete_blog(request, id):
     data = Blog.objects.get(id=id).delete()
-    return redirect("/blog")
+    return redirect("/adminapp/blog")
 
 def attorneys(request):
     data = Attorneys.objects.all
@@ -77,7 +77,7 @@ def add_team(request):
         form = Attorneys_edit_Form(request.POST, request.FILES)  
         if form.is_valid():  
             form.save()  
-            return redirect('/attorneys')  
+            return redirect('/adminapp/attorneys')  
     else:
         form = Attorneys_edit_Form()  
     return render(request, 'adminapp/add_team.html', {'form': form})
@@ -88,31 +88,15 @@ def edit_attorneys(request,id):
         form = Attorneys_edit_Form(request.POST, request.FILES, instance=attorneys_instance)
         if form.is_valid():
             form.save()
-            return redirect('/attorneys')
+            return redirect('/adminapp/attorneys')
     else:
         form = Attorneys_edit_Form(instance=attorneys_instance)
     return render(request, 'adminapp/add_team.html', {'form': form})
 
-# def add_or_edit_attorneys(request, id=None):
-#     instance = get_object_or_404(Attorneys, pk=id) if id else None
-#     if request.method == 'POST':
-#         form = Attorneys_edit_Form(request.POST, request.FILES, instance=instance)
-#         if form.is_valid():
-#             form.save()  
-#             return redirect('/attorneys')
-#     else:
-#         form = Attorneys_edit_Form(instance=instance)
-
-#     context = {
-#         'form': form,
-#         'is_edit': id is not None  
-#     }
-#     return render(request, 'adminapp/attorneys.html',{"form":form})
-
 
 def delete_Attorneys(request,id):
     data = Attorneys.objects.get(id=id).delete()
-    return redirect("/attorneys")
+    return redirect("/adminapp/attorneys")
 
 def add_or_edit_case_categories(request, id=None):
     instance = get_object_or_404(case_categories, pk=id) if id else None
@@ -120,7 +104,7 @@ def add_or_edit_case_categories(request, id=None):
         form = case_categories_edit_Form(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()  
-            return redirect('/case_categories')
+            return redirect('adminapp/case_categories')
     else:
         form = case_categories_edit_Form(instance=instance)
 
@@ -130,6 +114,9 @@ def add_or_edit_case_categories(request, id=None):
     }
     return render(request, 'adminapp/add_case_categories.html',{"form":form})
         
+def delete_case_categories(request,id):
+    data = case_categories.objects.get(id=id).delete()
+    return redirect("/adminapp/case_categories")
 
 def types_Law(request):
     data = Types_Law.objects.all
@@ -141,7 +128,7 @@ def add_or_edit_types_law(request, id=None):
         form = types_edit_Form(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect('/types_Law')
+            return redirect('/adminapp/types_Law')
     else:
         form = types_edit_Form(instance=instance)
 
@@ -151,13 +138,10 @@ def add_or_edit_types_law(request, id=None):
     }
     return render(request, 'adminapp/add_types_law.html', {'form': form})
 
-def delete_case_categories(request,id):
-    data = case_categories.objects.get(id=id).delete()
-    return redirect("/case_categories")
 
 def delete_types_law(request,id):
     data = Types_Law.objects.get(id=id).delete()
-    return redirect("/types_Law")
+    return redirect("/adminapp/types_Law")
 
 def casestudies(request):
     data = case_studies.objects.all()
@@ -169,7 +153,7 @@ def add_or_edit_case_study(request, pk=None):
         form = case_studies_Form(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()  
-            return redirect('/case_studies')  
+            return redirect('/adminapp/case_studies')  
     else:
         form = case_studies_Form(instance=instance)
 
@@ -192,7 +176,7 @@ def add_new_lawyer(request):
         form = add_lawyer(request.POST)  
         if form.is_valid():  
             form.save()  
-            return redirect('/lawyer')  
+            return redirect('/adminapp/lawyer')  
     else:
         form = add_lawyer()  
     return render(request, 'adminapp/add_lawyer.html', {'form': form})
@@ -208,7 +192,7 @@ def add_or_edit_client(request, pk=None):
         form = add_clients_forms(request.POST, request.FILES, instance=instance)
         if form.is_valid():
             form.save()  
-            return redirect('/clients')  
+            return redirect('/adminapp/clients')  
     else:
         form = add_clients_forms(instance=instance)
         
@@ -228,7 +212,7 @@ def edit_lawyer(request,id):
         form = add_lawyer(request.POST, request.FILES, instance=lawyer_instance)
         if form.is_valid():
             form.save()
-            return redirect('/lawyer')
+            return redirect('/adminapp/lawyer')
     else:
         form = add_lawyer(instance=lawyer_instance)
     return render(request, 'adminapp/add_lawyer.html', {'form': form})

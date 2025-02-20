@@ -29,6 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # or 'django.contrib.sessions.backends.cache'
+SESSION_COOKIE_AGE = 86400  # 24 hours in seconds
+SESSION_SAVE_EVERY_REQUEST = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -86,9 +89,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-LOGIN_REDIRECT_URL = '/google-login-callback/'
-LOGOUT_REDIRECT_URL = '/#'
-
+LOGIN_REDIRECT_URL = '/lawyerapp/google-login-callback/'
+LOGOUT_REDIRECT_URL = '/lawyerapp'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_AUTO_SIGNUP = True

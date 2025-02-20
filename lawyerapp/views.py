@@ -49,7 +49,7 @@ def google_login_callback(request):
                 request.session['email'] = str(request.user.email)
                 # Force session save
                 request.session.modified = True
-                return redirect("/index")
+                return redirect("/lawyerapp/index")
             else:
                 # Handle case where lawyer doesn't exist
                 messages.error(request, "No lawyer account found with this email")

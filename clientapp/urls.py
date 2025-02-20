@@ -21,9 +21,9 @@ from clientapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login_view),
-    path('logout', views.logout),
-    path('index', views.index),
-    path('appointment', views.appointment),
-    path('details', views.details),
-    path('instruction', views.instruction),
+    path('/logout', views.logout),
+    path('/index', views.index),
+    path('/appointment', views.appointment),
+    path('/details', views.details),
+    path('/instruction', views.instruction),
 ]

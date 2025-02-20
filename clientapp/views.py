@@ -13,7 +13,7 @@ def index(request):
 
 def login_view(request):
     if request.session.get("isclientlogin"):
-        return redirect("/index")
+        return redirect("clientapp/index")
     if request.POST:
         name = request.POST['name']
         password = request.POST['password']
@@ -23,14 +23,14 @@ def login_view(request):
             request.session['name'] = name
             request.session['user_id'] = client['id']
             request.session['lawyer_id'] = client['lid']
-            return redirect('/index')
+            return redirect('clientapp/index')
         else :
             return render(request,'clientapp/login.html',{'error':'Invalid username or password'})
     return render(request,'clientapp/login.html')
 
 def logout(request):
     del request.session['isclientlogin']
-    return redirect("/")
+    return redirect("/clientapp")
 
 
 
@@ -55,7 +55,7 @@ def appointment(request):
             appointment.up_doc1 = request.FILES['up_doc1']
         
         appointment.save()
-        return redirect("/index")
+        return redirect("/clientapp/index")
 
     return render(request, "clientapp/appointment.html")
 
