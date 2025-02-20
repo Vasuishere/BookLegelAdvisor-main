@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from userapp.models import contact,Appointment,Attorneys,case_categories,Types_Law,Blog,case_studies,Client_Review
+from userapp.models import contact,Appointment,Attorneys,case_categories,Types_Law,Blog,case_studies,Client_Review,User_Appointment
 from adminapp.models import adminuser,lawyer
 from clientapp.models import clients
-from .forms import Attorneys_edit_Form,case_categories_edit_Form,types_edit_Form,case_studies_Form,blog_edit_Form,add_lawyer,add_clients_forms
+from .forms import Attorneys_edit_Form,case_categories_edit_Form,types_edit_Form,case_studies_Form,blog_edit_Form,add_lawyer,add_clients_forms,edit_user_appointments
 
 # Create your views here.
 def index(request):
@@ -14,7 +14,8 @@ def Show_contact(request):
 
 def Show_Appointment(request):
     data = Appointment.objects.all
-    return render(request,'adminapp/appointment.html',{"data":data})
+    user_appointments = User_Appointment.objects.all
+    return render(request,'adminapp/appointment.html',{"data":data,"User_Appointment":user_appointments})
 
 def login(request):
     if request.session.get("isadminlogin"):
@@ -217,7 +218,18 @@ def edit_lawyer(request,id):
         form = add_lawyer(instance=lawyer_instance)
     return render(request, 'adminapp/add_lawyer.html', {'form': form})
 
-
+def edit_appointments(request,id):
+    appointment_instance = get_object_or_404(User_Appointment, pk=id)
+    if request.method =="POST":
+        form = edit_user_appointments(request.POST,instance=appointment_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('/adminapp/appointment')
+        else:
+            return render(request, 'adminapp/edit_appointments.html',{'form':form})
+    else:
+        form = edit_user_appointments(instance=appointment_instance)
+    return render(request,"adminapp/edit_user_appointments.html", {'form':form})
 
 def demo(request):
     return render(request,'adminapp/demo.html')

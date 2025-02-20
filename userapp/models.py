@@ -77,10 +77,21 @@ class Appointment(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     phoneno = models.CharField(max_length=15)
+    service = models.CharField(max_length=100)  # Added service field
+    gender = models.CharField(max_length=10)  # Added gender field
     message = models.TextField()
-    up_doc1 = models.FileField(upload_to='appointments/', null=True, blank=True)
+    up_doc1 = models.FileField(upload_to='appointments/', blank=True, null=True)
     userid = models.ForeignKey(clients, on_delete=models.CASCADE)
-    lid = models.ForeignKey(lawyer, on_delete=models.CASCADE)
-    
+    lid = models.ForeignKey(lawyer, on_delete=models.CASCADE, blank=True, null=True)  # Made optional
+
     def __str__(self):
-        return f"Appointment for {self.name} with {self.lid.name}"
+        return f"Appointment for {self.name} with {self.lid.name if self.lid else 'No Lawyer Assigned'}"
+class User_Appointment(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phoneno = models.CharField(max_length=15)
+    service = models.CharField(max_length=100)  # Added service field
+    message = models.TextField()
+    lawyer = models.ForeignKey(lawyer, on_delete=models.CASCADE, blank=True, null=True)
+    def __str__(self):
+        return f"Appointment for {self.name}"

@@ -33,6 +33,7 @@ urlpatterns = [
     path('single', views.single),
     path('team', views.team),
     path('appointment', views.appo_intment),
+    path('user_appo_intment', views.user_appo_intment),
     path('login', views.login),
     path('header', views.header),
     path('logout', views.logout),

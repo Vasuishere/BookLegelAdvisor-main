@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from adminapp.models import lawyer,Education,Work_experience
 from clientapp.models import clients,messages
-from userapp.models import Appointment
+from userapp.models import Appointment,User_Appointment
 from adminapp.forms import update_lawyer_profile
 import random
 from django.core.mail import send_mail
@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 def login_lawyer(request):
     if request.session.get("islawyerlogin"):
-        return redirect("/index")
+        return redirect("/lawyerapp/index")
     if request.POST:
         email = request.POST['email']
         password = request.POST['password']
@@ -21,18 +21,20 @@ def login_lawyer(request):
             request.session['user_id'] = lawyerData['id']
             request.session['name'] = lawyerData['name']
             request.session['email'] = email
-            return redirect("/index")
+            breakpoint()
+            return redirect("/lawyerapp/index")
     return render(request,"lawyerapp/login.html")
 
 def logout(request):
     del request.session['islawyerlogin']
-    return redirect("/")
+    return redirect("/lawyerapp")
 
 
 def index(request):
     lawyer_id = request.session['user_id']
     data = Appointment.objects.filter(lid=lawyer_id)
-    return render(request, 'lawyerapp/index.html',{"data":data})
+    User_appointments = User_Appointment.objects.filter(lawyer=lawyer_id)
+    return render(request, 'lawyerapp/index.html',{"data":data,"User_appointments":User_appointments})
 
 @login_required
 def google_login_callback(request):
@@ -93,7 +95,8 @@ def pricing(request):
 def appointment(request):
     lawyer_id = request.session['user_id']
     data = Appointment.objects.filter(lid=lawyer_id)
-    return render(request,'lawyerapp/appointment.html',{"data":data})
+    User_appointments = User_Appointment.objects.filter(lawyer=lawyer_id)
+    return render(request,'lawyerapp/appointment.html',{"data":data,"User_appointment":User_appointments})
 
 
 def message(request, id):

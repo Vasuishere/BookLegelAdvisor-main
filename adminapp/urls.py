@@ -28,6 +28,7 @@ urlpatterns = [
     path('/logout', views.logout),
     path('/contact', views.Show_contact),
     path('/appointment', views.Show_Appointment),
+    path('/edit_user_appointments/<int:id>', views.edit_appointments, name='edit_user_appointments'),
     path('/demo', views.demo),
     
     path('/reviews', views.reviews),

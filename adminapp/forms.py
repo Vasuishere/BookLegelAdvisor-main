@@ -1,6 +1,7 @@
 from userapp.models import Attorneys,case_categories,Types_Law,case_studies,Blog
 from adminapp.models import lawyer
 from clientapp.models import clients
+from userapp.models import User_Appointment
 from django import forms
 
 
@@ -44,3 +45,9 @@ class update_lawyer_profile(forms.ModelForm):
     class Meta:
         model = lawyer
         fields = ['name','age']
+        
+        
+class edit_user_appointments(forms.ModelForm):
+    class Meta:
+        model = User_Appointment
+        fields = ['name','email','lawyer']
