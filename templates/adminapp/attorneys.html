@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>Admin Panel</title>
 
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
@@ -49,42 +49,70 @@
         <div class="content">
             <!-- Navbar Include -->
             {% include 'adminapp/navbar.html' %}
-
-            <!-- Table Section Start -->
-            <h2 class="text-center">Our Team Members </h2>
-            <div class="row">
-                {% for i in data %}
-                <div class="col-4" style="font-family: Arial, sans-serif; max-width: 300px; margin: 20px; border: 1px solid #ddd; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background: #f9f9f9; height: fit-content;">
-                    <a href="{% url 'edit_attorney' i.id %}" style="margin: 0; font-size: 1.2em; font-weight:bold; color: #333;">{{ forloop.counter }}. {{ i.name }}
-                        <a href="{% url 'delete_attorney' i.id %}" class="btn btn-link float-end"><i class="fa-solid fa-trash" style="color:red;"></i></a>
-                        <a href="{% url 'edit_attorney' i.id %}" class="btn btn-link float-end"><i class="fa-solid fa-pen" style="color:grey;"></i> 
-                    </a>
-                    <div>
-                        <h4 style="margin: 10px 0 5px; font-size: 1.5em; color: #444;">{{ i.profession }}</h4>
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-                            <span style="display: flex; align-items: center; font-size: 0.9em; color: #666;">Emp ID: {{i.id}}</span>
-                            <span style="display: flex; align-items: center; font-size: 0.9em; color: #666;">Joined 1 Month Ago</span>
-                        </div>
-                        {% comment %} <button id="toggleReport{{ i.id }}" onclick="toggleReport({{ i.id }})" class="btn btn-outline-dark">
-                            Details
-                        </button> {% endcomment %}
-                    </div>
-                    <div id="expandedContent{{ i.id }}" style="display: none; margin-top: 15px; border-top: 1px solid #ddd; padding-top: 15px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.9em; color: #666; margin-bottom: 10px;">
-                            {% comment %} type Here {% endcomment %}
-                        </div>
-                        {% comment %} type Here  {% endcomment %}
-                        <a href="{% url 'edit_attorney' i.id %}" class="btn btn-secondary"><i class="fa-solid fa-pen"></i>Edit</a>
-                        <a href="{% url 'delete_attorney' i.id %}" class="btn btn-warning"><i class="fa-solid fa-trash"></i></a>
-                        <button onclick="toggleReport({{ i.id }})" class="btn btn-outline-dark">
-                            Hide Details
-                        </button>
-                    </div>
+            <div class="row justify-content-center mt-2 position-absolute w-fit end-0">
+                <div class="col-sm-12 col-xl-12">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
-                {% endfor %}
+            </div>
+            <!-- Table Section Start -->
+            <h2 class="text-center mt-4">Our Team Members </h2>
+            <div class="container-fluid px-4">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for i in data %}
+                    <div class="col">
+                        <div class="card h-100" style="font-family: Arial, sans-serif; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background: #f9f9f9;">
+                            <div class="card-body">
+                                <a href="{% url 'edit_attorney' i.id %}" class="text-decoration-none">
+                                    <h5 class="card-title text-dark mb-3">
+                                        {{ forloop.counter }}. {{ i.name }}
+                                        <span class="float-end">
+                                            <a href="{% url 'edit_attorney' i.id %}" class="btn btn-link">
+                                                <i class="fa-solid fa-pen" style="color:grey;"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deletePopup" 
+                                                onclick="setDeleteId('{{ i.id }}')">
+                                                <i class="fa-solid fa-trash" style="color:red;"></i>
+                                            </a>
+                                        </span>
+                                    </h5>
+                                </a>
+                                
+                                <h4 class="card-subtitle mb-3">{{ i.profession }}</h4>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="text-muted">Emp ID: {{i.id}}</span>
+                                    <span class="text-muted">Joined 1 Month Ago</span>
+                                </div>
+                                
+                                <div id="expandedContent{{ i.id }}" style="display: none;" class="mt-3 pt-3 border-top">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        {% comment %} type Here {% endcomment %}
+                                    </div>
+                                    {% comment %} type Here {% endcomment %}
+                                    <div class="d-flex gap-2">
+                                        <a href="{% url 'edit_attorney' i.id %}" class="btn btn-secondary">
+                                            <i class="fa-solid fa-pen me-1"></i>Edit
+                                        </a>
+                                        <a href="{% url 'delete_attorney' i.id %}" class="btn btn-warning">
+                                            <i class="fa-solid fa-trash me-1"></i>Delete
+                                        </a>
+                                        <button onclick="toggleReport({{ i.id }})" class="btn btn-outline-dark">
+                                            Hide Details
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
             <!-- Table Section End -->
-
             <!-- Toggle Report Script -->
             <script>
                 function toggleReport(id) {
@@ -123,6 +151,43 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'adminapp/js/main.js' %}"></script>
+    <script>
+        setTimeout(function() {
+            if ($('#msg').length > 0) {
+                $('#msg').slideUp(500, function() {
+                    $(this).remove();
+                });
+            }
+        }, 2000);
+        $('#deletePopup').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var modal = $(this);
+        });
+        function setDeleteId(id) {
+            const deleteLink = document.getElementById('confirmDelete');
+            deleteLink.href = "{% url 'delete_attorney' 0 %}".replace('0', id);
+        }
+    </script>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="deletePopup" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this attorney?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a href="#" id="confirmDelete" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

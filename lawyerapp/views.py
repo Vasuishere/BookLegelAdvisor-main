@@ -19,9 +19,8 @@ def login_lawyer(request):
         if lawyerData != None:
             request.session['islawyerlogin'] = True
             request.session['user_id'] = lawyerData['id']
-            request.session['name'] = lawyerData['name']
+            request.session['lawyername'] = lawyerData['name']
             request.session['email'] = email
-            breakpoint()
             return redirect("/lawyerapp/index")
     return render(request,"lawyerapp/login.html")
 
@@ -47,7 +46,7 @@ def google_login_callback(request):
                 # Explicitly convert id to string to ensure proper session storage
                 request.session['islawyerlogin'] = True
                 request.session['user_id'] = str(lawyer_data.id)
-                request.session['name'] = str(lawyer_data.name)
+                request.session['lawyername'] = str(lawyer_data.name)
                 request.session['email'] = str(request.user.email)
                 # Force session save
                 request.session.modified = True
@@ -101,7 +100,7 @@ def appointment(request):
 
 def message(request, id):
     data1 = messages.objects.filter(lawyer_name_id=request.session["user_id"],client_id=id).all().order_by('-created_at')
-    lawyer_name = request.session.get('name')
+    lawyer_name = request.session.get('lawyername')
     
     # Fetch lawyer details
     try:

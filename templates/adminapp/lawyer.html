@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>Admin Panel</title>
 
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
@@ -56,7 +56,7 @@
                 {% for i in data %}
                 <div class="col-4" style="font-family: Arial, sans-serif; max-width: 300px; margin: 20px; border: 1px solid #ddd; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); background: #f9f9f9; height: fit-content;">
                     <a href="{% url 'edit_lawyer' i.id %}" style="margin: 0; font-size: 1.2em; font-weight:bold; color: #333;">{{ forloop.counter }}. {{ i.name }}
-                        <a href="{% url 'delete_attorney' i.id %}" class="btn btn-link float-end"><i class="fa-solid fa-trash" style="color:red;"></i></a>
+                        <a href="{% url 'delete_lawyer' i.id %}" class="btn btn-link float-end"><i class="fa-solid fa-trash" style="color:red;"></i></a>
                         <a href="{% url 'edit_lawyer' i.id %}" class="btn btn-link float-end"><i class="fa-solid fa-pen" style="color:grey;"></i> 
                     </a>
                     <div>

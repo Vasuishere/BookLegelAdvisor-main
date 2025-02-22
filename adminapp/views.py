@@ -3,6 +3,7 @@ from userapp.models import contact,Appointment,Attorneys,case_categories,Types_L
 from adminapp.models import adminuser,lawyer
 from clientapp.models import clients
 from .forms import Attorneys_edit_Form,case_categories_edit_Form,types_edit_Form,case_studies_Form,blog_edit_Form,add_lawyer,add_clients_forms,edit_user_appointments
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -23,13 +24,14 @@ def login(request):
     if request.POST:
         name = request.POST["name"]
         password = request.POST["password"]
-        user = adminuser.objects.filter(name=name,password=password).count()
-        if user>0:
+        user = adminuser.objects.filter(name=name, password=password).count()
+        if user > 0:
             request.session['isadminlogin'] = True
             request.session['name'] = name
-            # request.session['user_id'] = user.id
+            messages.success(request, "Login Successfully")
             return redirect("adminapp/index")
-    return render(request,'adminapp/login.html')
+        messages.error(request, "Wrong Username Or Password")
+    return render(request, 'adminapp/login.html')
 
 def logout(request):
     del request.session["isadminlogin"]
@@ -77,7 +79,8 @@ def add_team(request):
     if request.method == 'POST':  
         form = Attorneys_edit_Form(request.POST, request.FILES)  
         if form.is_valid():  
-            form.save()  
+            form.save()
+            messages.success(request,'New Member Is Added Succesfully ')
             return redirect('/adminapp/attorneys')  
     else:
         form = Attorneys_edit_Form()  
@@ -97,6 +100,7 @@ def edit_attorneys(request,id):
 
 def delete_Attorneys(request,id):
     data = Attorneys.objects.get(id=id).delete()
+    messages.error(request,'Member Deleted Succesfully')
     return redirect("/adminapp/attorneys")
 
 def add_or_edit_case_categories(request, id=None):
@@ -171,6 +175,10 @@ def reviews(request):
 def lawyers(request):
     data = lawyer.objects.all
     return render(request,'adminapp/lawyer.html',{"data":data})
+
+def delete_lawyer(request,id):
+    data = lawyer.objects.get(id=id).delete()
+    return redirect(request,"adminapp/lawyer.html")
 
 def add_new_lawyer(request):
     if request.method == 'POST':  

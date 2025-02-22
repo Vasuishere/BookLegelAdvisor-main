@@ -43,6 +43,7 @@ urlpatterns = [
     
     path('/lawyer', views.lawyers),
     path('/add_new_lawyer', views.add_new_lawyer, name='add_new_lawyer'),
+    path('/delete_lawyer/<int:id>', views.delete_lawyer, name='delete_lawyer'),    
     path('/edit_lawyer/<int:id>', views.edit_lawyer, name='edit_lawyer'),
     
     path('/blog', views.blog),
