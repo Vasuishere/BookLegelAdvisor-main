@@ -19,4 +19,4 @@ class messages(models.Model):
     lawyer_name = models.ForeignKey(lawyer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return f"Message from {self.client}"
+        return f"Message To {self.client} From {self.lawyer_name} at {self.created_at.strftime('%H:%M:%S')}"

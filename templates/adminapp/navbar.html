@@ -102,10 +102,10 @@
           style="width: 40px; height: 40px"
         />
         <span class="d-none d-lg-inline-flex">
-          {% if request.session.name %}
-            {{ request.session.name }}
+          {% if request.session.admin_session.name %}
+              {{ request.session.admin_session.name }}
           {% endif %}
-        </span>
+      </span>
       </a>
       <div
         class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"

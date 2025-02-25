@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login),
     path('/index', views.index),
-    path('/logout', views.logout),
+    path('/logout', views.logout_admin),
     path('/contact', views.Show_contact),
     path('/appointment', views.Show_Appointment),
     path('/edit_user_appointments/<int:id>', views.edit_appointments, name='edit_user_appointments'),

@@ -19,23 +19,27 @@ def Show_Appointment(request):
     return render(request,'adminapp/appointment.html',{"data":data,"User_Appointment":user_appointments})
 
 def login(request):
-    if request.session.get("isadminlogin"):
+    admin_session = request.session.get("admin_session", {})
+    if admin_session.get("is_logged_in"):
         return redirect("adminapp/index")
-    if request.POST:
+    if request.method == "POST":  # Use request.method for correctness
         name = request.POST["name"]
         password = request.POST["password"]
         user = adminuser.objects.filter(name=name, password=password).count()
         if user > 0:
-            request.session['isadminlogin'] = True
-            request.session['name'] = name
+            request.session["admin_session"] = {
+                "is_logged_in": True,
+                "name": name
+            }
             messages.success(request, "Login Successfully")
             return redirect("adminapp/index")
         messages.error(request, "Wrong Username Or Password")
     return render(request, 'adminapp/login.html')
 
-def logout(request):
-    del request.session["isadminlogin"]
-    return redirect("/adminapp")
+def logout_admin(request):
+    if 'admin_session' in request.session:
+        del request.session['admin_session']
+    return redirect('/adminapp')
 
 def blog(request):
     data = Blog.objects.all

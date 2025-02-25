@@ -12,15 +12,15 @@
                     </div>
                     <div class="ms-3">
                         <h6 class="mb-0">
-                            {% if request.session.name %}
-                                {{ request.session.name }}
+                            {% if request.session.client_session.name %}
+                                {{ request.session.client_session.name }}
                             {% endif %}
                         </h6>
                         <span>Admin</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="/adminapp" class="nav-item nav-link "><i class="fa-solid fa-user-tie"></i>Dashboard</a>
+                    <a href="/adminapp/index" class="nav-item nav-link "><i class="fa-solid fa-user-tie"></i>Dashboard</a>
                     <a href="/adminapp/contact" class="nav-item nav-link "><i class="fa-solid fa-address-book"></i>Contact</a>
                     <a href="/adminapp/appointment" class="nav-item nav-link"><i class="fa-regular fa-calendar-check"></i>Appointment</a>
                     <a href="/adminapp/attorneys" class="nav-item nav-link"><i class="fa-solid fa-people-group"></i>Attorneys </a>

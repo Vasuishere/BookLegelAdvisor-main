@@ -144,8 +144,8 @@
             <i class="bi bi-file-person-fill display-1 text-primary"></i>
             <h1 class="display-1 fw-bold">Welcome</h1>
             <h1 class="mb-4">
-              {% if request.session.name %} {{ request.session.name.lower }} {%
-              else %} {% endif %}
+              {% if request.session.admin_session.name %} {{ request.session.admin_session.name }} 
+              {% endif %}
             </h1>
             <p class="mb-4">
               Here You Can Manage All The Function Or App Through Admin Pannel

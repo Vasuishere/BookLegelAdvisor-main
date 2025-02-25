@@ -32,6 +32,6 @@ urlpatterns = [
     path('/index', views.index),
     path('/forgotpassword', views.forgotpassword),
     path('', views.login_lawyer),
-    path('/logout', views.logout),
+    path('/logout', views.logout_lawyer),
     path('/google-login-callback/', views.google_login_callback, name='google_login_callback'),
 ]

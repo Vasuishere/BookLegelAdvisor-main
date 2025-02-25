@@ -10,51 +10,61 @@ from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 
 def login_lawyer(request):
-    if request.session.get("islawyerlogin"):
+    lawyer_session = request.session.get("lawyer_session", {})
+    if lawyer_session.get("is_logged_in"):
         return redirect("/lawyerapp/index")
-    if request.POST:
+    if request.method == "POST":
         email = request.POST['email']
         password = request.POST['password']
-        lawyerData = lawyer.objects.filter(email=email,password=password).values('id','name').first()
-        if lawyerData != None:
-            request.session['islawyerlogin'] = True
-            request.session['user_id'] = lawyerData['id']
-            request.session['lawyername'] = lawyerData['name']
-            request.session['email'] = email
+        lawyerData = lawyer.objects.filter(email=email, password=password).values('id', 'name').first()
+        if lawyerData:
+            request.session["lawyer_session"] = {
+                "is_logged_in": True,
+                "lawyer_id": lawyerData['id'],
+                "name": lawyerData['name'],
+                "email": email
+            }
             return redirect("/lawyerapp/index")
-    return render(request,"lawyerapp/login.html")
+    return render(request, "lawyerapp/login.html")
 
-def logout(request):
-    del request.session['islawyerlogin']
-    return redirect("/lawyerapp")
+def logout_lawyer(request):
+    if 'lawyer_session' in request.session:
+        del request.session['lawyer_session']
+    return redirect('/lawyerapp')
 
 
 def index(request):
-    lawyer_id = request.session['user_id']
+    lawyer_session = request.session.get("lawyer_session", {})
+    lawyer_id = lawyer_session.get("lawyer_id")
+    
+    if not lawyer_id:
+        return redirect("/lawyerapp/login")
+        
     data = Appointment.objects.filter(lid=lawyer_id)
     User_appointments = User_Appointment.objects.filter(lawyer=lawyer_id)
-    return render(request, 'lawyerapp/index.html',{"data":data,"User_appointments":User_appointments})
+    
+    return render(request, 'lawyerapp/index.html', {
+        "data": data,
+        "User_appointments": User_appointments
+    })
 
 @login_required
 def google_login_callback(request):
     try:
-        social_account = SocialAccount.objects.filter(user=request.user).first()
-        if social_account:
-            # Get or create lawyer profile using Google email
-            lawyer_data = lawyer.objects.filter(email=request.user.email).first()
-            if lawyer_data:
-                # Explicitly convert id to string to ensure proper session storage
-                request.session['islawyerlogin'] = True
-                request.session['user_id'] = str(lawyer_data.id)
-                request.session['lawyername'] = str(lawyer_data.name)
-                request.session['email'] = str(request.user.email)
-                # Force session save
-                request.session.modified = True
-                return redirect("/lawyerapp/index")
-            else:
-                # Handle case where lawyer doesn't exist
-                messages.error(request, "No lawyer account found with this email")
-                return redirect("/")
+        social_account = SocialAccount.objects.get(user=request.user)
+        lawyer_data = lawyer.objects.filter(email=request.user.email).first()
+        if lawyer_data:
+            request.session["lawyer_session"] = {
+                "is_logged_in": True,
+                "lawyer_id": str(lawyer_data.id),
+                "name": str(lawyer_data.name),
+                "email": str(request.user.email)
+            }
+            request.session.modified = True
+            return redirect("/lawyerapp/index")
+        else:
+            messages.error(request, "No lawyer account found with this email")
+            return redirect("/")
     except Exception as e:
         messages.error(request, "Error during Google login")
         return redirect("/")
@@ -64,7 +74,8 @@ def virtualappointment(request):
 
 
 def profile(request):
-    name = request.session['user_id']
+    lawyer_session = request.session.get("lawyer_session", {})
+    name = lawyer_session.get("lawyer_id")
     prof_ile = lawyer.objects.filter(id=name).values('name','email').first
     education = Education.objects.filter(lawyer=name).values('degree','institution','expertise','start_date','end_date').all().order_by('-end_date')
     experience = Work_experience.objects.filter(lawyer=name).values('Court','start_date','end_date').all()
@@ -84,7 +95,8 @@ def profile_update(request,id):
 
 
 def activeclient(request):
-    lawyer_id = request.session['user_id']
+    lawyer_session = request.session.get("lawyer_session", {})
+    lawyer_id = lawyer_session.get("lawyer_id")
     data = clients.objects.filter(lid=lawyer_id)
     return render(request,'lawyerapp/activeclient.html',{"data":data})
 
@@ -92,30 +104,39 @@ def pricing(request):
     return render(request,'lawyerapp/pricing.html')
 
 def appointment(request):
-    lawyer_id = request.session['user_id']
+    lawyer_session = request.session.get("lawyer_session", {})
+    lawyer_id = lawyer_session.get("lawyer_id")
+    if not lawyer_id:
+        return redirect("/lawyerapp/login")
     data = Appointment.objects.filter(lid=lawyer_id)
     User_appointments = User_Appointment.objects.filter(lawyer=lawyer_id)
-    return render(request,'lawyerapp/appointment.html',{"data":data,"User_appointment":User_appointments})
+    return render(request, 'lawyerapp/appointment.html', {
+        "data": data,
+        "User_appointments": User_appointments  # Fixed key name
+    })
 
 
 def message(request, id):
-    data1 = messages.objects.filter(lawyer_name_id=request.session["user_id"],client_id=id).all().order_by('-created_at')
-    lawyer_name = request.session.get('lawyername')
+    lawyer_session = request.session.get("lawyer_session", {})
+    lawyer_id = lawyer_session.get("lawyer_id")
+    if not lawyer_id:
+        return redirect("/lawyerapp/login")
+    data1 = messages.objects.filter(lawyer_name_id=lawyer_id, client_id=id).all().order_by('-created_at')
+    lawyer_name = lawyer_session.get("name")  # Fetch from session dict
     
-    # Fetch lawyer details
     try:
-        data = lawyer.objects.get(name=lawyer_name)
+        data = lawyer.objects.get(id=lawyer_id)  # Use ID instead of name
     except lawyer.DoesNotExist:
         data = None  
-    client = get_object_or_404(clients, id=id)  # Get client instance
+    client = get_object_or_404(clients, id=id)
     lawyer_name = data
     if request.method == "POST":
         title = request.POST.get('title')
         msg = request.POST.get('msg')
         obj = messages.objects.create(title=title, msg=msg, client=client, lawyer_name=lawyer_name)
-        breakpoint()
-        return redirect(f'/message/{id}')
-    return render(request, 'lawyerapp/message.html', {'data': data, 'client': client,'data1':data1})
+        obj.save()
+        return redirect(f'/lawyerapp/message/{id}/')
+    return render(request, 'lawyerapp/message.html', {'data': data, 'client': client, 'data1': data1})
 
 
 def forgotpassword(request):
