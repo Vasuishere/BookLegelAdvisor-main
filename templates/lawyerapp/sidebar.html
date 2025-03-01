@@ -1,65 +1,61 @@
 {% load static %}
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-  <div class="app-brand demo mt-3">
-    <a href="{% url 'clientapp:index' %}" class="app-brand-link">
-      <span class="app-brand-text demo menu-text fw-bolder ms-2 mt-2">Client - Kanun</span>
-    </a>
-    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-      <i class="bx bx-chevron-left bx-sm align-middle"></i>
-    </a>
+<nav id="sidebar">
+    <div class="sidebar_blog_1">
+       <div class="sidebar-header">
+          <div class="logo_section">
+             <a href="{% url 'index' %}"></a>
   </div>
-  <div class="menu-inner-shadow"></div>
-  <ul class="menu-inner py-1">
-    <!-- Dashboard -->
-    <li class="menu-item mt-4">
-      <a href="{% url 'clientapp:index' %}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-home-circle"></i>
-        <div data-i18n="Analytics">Dashboard</div>
-      </a>
+       </div>
+       <div class="sidebar_user_info">
+          <div class="icon_setting"></div>
+          <div class="user_profle_side">
+             <div class="user_img"><img class="img-responsive" src="{% static 'lawyerapp/images/layout_img/user_img.jpg'%}" alt="#" /></div>
+             <div class="user_info">
+                <h6>{{request.session.lawyer_session.name}}</h6>
+                <p><span class="online_animation"></span> Online</p>
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="sidebar_blog_2">
+       <h4>Welcome </h4>
+       <ul class="list-unstyled components">
+          <li class="active">
+             <a href="{% url 'index' %}"><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
     </li>
-    <!-- Layouts -->
-    <li class="menu-header medium">
-      <span class="menu-header-text">Cases</span>
+          <li>
+             <a href="{% url 'activeclient' %}"><i class="fa-solid fa-briefcase" style="color. #FFD43B;"></i> <span>Active Clients</span></a>
     </li>
-    <li class="menu-item">
-      <a href="javascript:void(0);" class="menu-link menu-toggle">
-        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-        <div data-i18n="Account Settings">Case No.01</div>
-      </a>
-      <ul class="menu-sub">
-        <li class="menu-item">
-          <a href="{% url 'clientapp:details' %}" class="menu-link">Details</a>
+          <li>
+             <a href="#Appointments" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Appointments</span></a>
+             <ul class="collapse list-unstyled" id="Appointments">
+                <li><a href="{% url 'virtualappointment' %}"><span>Virtual Appointments</span></a></li>
+                <li><a href="{% url 'appointment' %}"><span>Appointments</span></a></li>
+             </ul>
         </li>
-        <li class="menu-item">
-          <a href="#" class="menu-link">
-            <div data-i18n="Account">Make Payments</div>
-          </a>
+          <li>
+             <a href="{% url 'pricing' %}"><i class="fa fa-briefcase blue1_color"></i> <span>Pricing Tables</span></a>
         </li>
-        <li class="menu-item">
-          <a href="{% url 'clientapp:instruction' %}" class="menu-link">View instruction</a>
+          <li>
+             <a href="{% url 'profile' %}"><i class="fa-solid fa-user" style="color. #B197FC;"></i> <span>Profile</span></a>
+          </li>
+          <li class="active">
+             <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>More </span></a>
+             <ul class="collapse list-unstyled" id="additional_page">
+                <li>
+                   <a href="{% url 'profile' %}"><span>Profile</span></a>
+                </li>
+                <li>
+                   <a href="/project.html"><span>Projects</span></a>
+                </li>
+                <li>
+                   <a href="{% url 'login_lawyer' %}"><span>Login</span></a>
+                </li>
+                <li>
+                   <a href="/404_error.html"><span>404 Error</span></a>
         </li>
       </ul>
     </li>
-    <li class="menu-header medium text">
-      <span class="menu-header-text">Settings</span>
-    </li>
-    <li class="menu-item">
-      <a href="{% url 'clientapp:newcase' %}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-support"></i>
-        <div data-i18n="Support">Register A New Case</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="{% url 'clientapp:appointment' %}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-calendar"></i>
-        <div>Book Appointments</div>
-      </a>
-    </li>
-    <li class="menu-item">
-      <a href="{% url 'clientapp:logout_client' %}" class="menu-link">
-        <i class="menu-icon tf-icons bx bx-log-out"></i>
-        <div>Logout</div>
-      </a>
-    </li>
   </ul>
-</aside>
+    </div>
+</nav>
