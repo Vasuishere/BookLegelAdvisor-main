@@ -80,6 +80,7 @@ class Appointment(models.Model):
     service = models.CharField(max_length=100)  # Added service field
     gender = models.CharField(max_length=10)  # Added gender field
     message = models.TextField()
+    status = models.CharField(max_length=20, default='pending')
     up_doc1 = models.FileField(upload_to='appointments/', blank=True, null=True)
     userid = models.ForeignKey(clients, on_delete=models.CASCADE)
     lid = models.ForeignKey(lawyer, on_delete=models.CASCADE, blank=True, null=True)  # Made optional

@@ -31,6 +31,7 @@ urlpatterns = [
     path('/activeclient', views.activeclient),
     path('/index', views.index),
     path('/forgotpassword', views.forgotpassword),
+    path('update-status/<int:appointment_id>/', views.update_status, name='update_status'),
     path('', views.login_lawyer),
     path('/logout', views.logout_lawyer),
     path('/google-login-callback/', views.google_login_callback, name='google_login_callback'),

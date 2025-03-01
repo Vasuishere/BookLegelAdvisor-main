@@ -74,4 +74,18 @@ def instruction(request):
     client_session = request.session.get("client_session", {})
     if not client_session.get("is_logged_in"):
         return redirect("/clientapp/login")
-    return render(request, 'clientapp/instruction.html')
+    client_id = client_session["client_id"]
+    lawyer_id = client_session["lawyer_id"]
+    msg = messages.objects.filter(client=client_id, lawyer_name=lawyer_id).order_by('-created_at')[:3]
+    return render(request, 'clientapp/instruction.html',{"msg":msg})
+
+def newcase_view(request):
+    client_id = request.session.get('client_session', {}).get('client_id','id')
+    appointments = Appointment.objects.filter(
+        userid_id=client_id,
+        status='pending'  
+    )
+    context = {
+        'appointments': appointments
+    }
+    return render(request, 'clientapp/newcase.html', context)

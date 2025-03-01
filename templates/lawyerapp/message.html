@@ -52,7 +52,7 @@
                                                 <p class="mb-0 text-muted small">To: {{i.client}}</p>
                                                 <h6 class="mb-0">{{i.title}}</h6>
                                             </div>
-                                            <small class="text-muted ms-auto">10:30 AM</small>
+                                            <small class="text-muted ms-auto">{{i.created_at|date:"g:i A"}}</small>
                                         </div>
                                         <p class="mb-0">{{i.msg}}</p>
                                     </div>

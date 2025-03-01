@@ -8,6 +8,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
+from google.auth.exceptions import RefreshError
+from django.http import JsonResponse
 
 def login_lawyer(request):
     lawyer_session = request.session.get("lawyer_session", {})
@@ -103,6 +105,15 @@ def activeclient(request):
 def pricing(request):
     return render(request,'lawyerapp/pricing.html')
 
+
+def update_status(request, appointment_id):
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        appointment = Appointment.objects.get(id=appointment_id)
+        appointment.status = status
+        appointment.save()
+    return redirect('/lawyerapp/index')  # Replace with your actual page name
+
 def appointment(request):
     lawyer_session = request.session.get("lawyer_session", {})
     lawyer_id = lawyer_session.get("lawyer_id")
@@ -164,3 +175,4 @@ def changepassword(request):
 def demo(request):
     random_no = ''.join([str(random.randint(0, 9)) for _ in range(8)])
     return render(request,'lawyerapp/demo.html', {'random': random_no})
+

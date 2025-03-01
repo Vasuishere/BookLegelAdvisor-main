@@ -75,19 +75,28 @@
                                                          <th>Case Category</th>
                                                          <th>Contact No.</th>
                                                          <th>Email</th>
+                                                         <th>Status</th>
                                                       </tr>
                                                    </thead>
                                                    <tbody>
                                                       {% for i in data %}
-                                             <tbody>
-                                                <tr>
-                                                   <td>{{i.name}}</td>
-                                                   <td>Doe</td>
-                                                   <td>{{i.phoneno}}</td>
-                                                   <td>{{i.email}}</td>
-                                                </tr>
-                                             </tbody>
-                                          {% endfor %}
+                                                      <tr>
+                                                         <td>{{i.name}}</td>
+                                                         <td>Doe</td>
+                                                         <td>{{i.phoneno}}</td>
+                                                         <td>{{i.email}}</td>
+                                                         <td>
+                                                            <form method="POST" action="{% url 'update_status' i.id %}">
+                                                               {% csrf_token %}
+                                                               <select name="status" class="form-control" onchange="this.form.submit()">
+                                                                  <option value="pending" {% if i.status == 'pending' %}selected{% endif %}>Pending</option>
+                                                                  <option value="completed" {% if i.status == 'completed' %}selected{% endif %}>Completed</option>
+                                                                  <option value="rejected" {% if i.status == 'rejected' %}selected{% endif %}>Rejected</option>
+                                                               </select>
+                                                            </form>
+                                                         </td>
+                                                      </tr>
+                                                      {% endfor %}
                                                    </tbody>
                                                 </table>
                                              </div>

@@ -25,5 +25,6 @@ urlpatterns = [
     path('/index', views.index),
     path('/appointment', views.appointment),
     path('/details', views.details),
+    path('/newcase', views.newcase_view),
     path('/instruction', views.instruction),
 ]
