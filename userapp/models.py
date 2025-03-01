@@ -1,5 +1,5 @@
 from django.db import models
-from clientapp.models import clients
+# from clientapp.models import clients
 from adminapp.models import lawyer
 
 # Create your models here.
@@ -82,7 +82,7 @@ class Appointment(models.Model):
     message = models.TextField()
     status = models.CharField(max_length=20, default='pending')
     up_doc1 = models.FileField(upload_to='appointments/', blank=True, null=True)
-    userid = models.ForeignKey(clients, on_delete=models.CASCADE)
+    userid = models.ForeignKey('clientapp.clients', on_delete=models.CASCADE)
     lid = models.ForeignKey(lawyer, on_delete=models.CASCADE, blank=True, null=True)  # Made optional
 
     def __str__(self):

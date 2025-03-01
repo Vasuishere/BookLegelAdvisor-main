@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.urls import path
 from clientapp import views
 
+app_name = 'clientapp'
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.login_client),
-    path('/logout', views.logout_client),
-    path('/index', views.index),
-    path('/appointment', views.appointment),
-    path('/details', views.details),
-    path('/newcase', views.newcase_view),
-    path('/instruction', views.instruction),
+    path('', views.login_client, name='login_client'),
+    path('logout/', views.logout_client, name='logout_client'),
+    path('index/', views.index, name='index'),
+    path('appointment/', views.appoin_tment, name='appointment'),
+    path('details/', views.details, name='details'),
+    path('newcase/', views.newcase_view, name='newcase'),
+    path('instruction/', views.instruction, name='instruction'),
+    path('case_list_view/', views.instruction, name='case_list_view'),
 ]

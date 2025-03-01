@@ -45,7 +45,8 @@
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Layout sidebar -->
-        {% include 'clientapp/sidebar.html' %}
+        {% load reusableComponent %}
+        {% case_list_view %}
         <!-- Layout sidebar -->
         <!-- Layout container -->
         <div class="layout-page">
