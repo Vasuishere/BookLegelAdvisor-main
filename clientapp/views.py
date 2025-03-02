@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import clients, messages, Case
 from userapp.models import Appointment
 from adminapp.models import lawyer
+from lawyerapp.models import request_payment
 
 
 def index(request):
@@ -125,4 +126,50 @@ def newcase_view(request):
         'appointments': appointments
     }
     return render(request, 'clientapp/newcase.html', context)
+
+def payment(request):
+    client_id = request.session.get('client_session', {}).get('client_id', 'id')
+    payment_requests = request_payment.objects.filter(client=client_id,status='pending').first()
+    
+    context = {
+        'payment_requests': payment_requests
+        # Pass the QuerySet with this name
+    }
+    return render(request,'clientapp/payment.html',context)
+
+import razorpay
+from django.views.decorators.csrf import csrf_exempt
+  # Ensure this is the correct model import
+
+def payment_process(request):
+    # Razorpay KeyId and Key Secret
+    key_id = 'rzp_test_PvM4GxK9MYlCUc'
+    key_secret = 'WzsOTRAU4l3oAA1CS7jlVS5E'
+
+    client_id = request.session.get('client_session', {}).get('client_id', 'id')
+    payment_requests = request_payment.objects.filter(client=client_id, status='pending').first()
+
+    if not payment_requests:
+        return render(request, 'clientapp/paymentprocess.html', {'error': 'No pending payments found'})
+
+    client = razorpay.Client(auth=(key_id, key_secret))
+
+    data = {
+        'amount': int(payment_requests.amt * 100),  # Razorpay expects amount in paisa (INR * 100)
+        'currency': 'INR',
+        'receipt': f"PAY_{payment_requests.id}",
+        'notes': {
+            'name': str(payment_requests.client),
+            'payment_for': 'Service Payment'
+        }
+    }
+    context = {
+        'payment': payment,
+        'payment_request': payment_requests
+    }    
+    return render(request, 'clientapp/paymentprocess.html', context)
+
+@csrf_exempt
+def success(request):
+    return render(request, 'clientapp/index.html', {'message': 'Payment Successful'})
 

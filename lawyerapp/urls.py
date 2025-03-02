@@ -26,6 +26,7 @@ urlpatterns = [
     path('appointment', views.appointment, name='appointment'),
     path('profile', views.profile, name='profile'),
     path('changepassword', views.changepassword, name='changepassword'),
+    path('paymentrequest/<int:id>/', views.payment_request, name='paymentrequest'),
     path('profile_update', views.profile_update, name='profile_update'),
     path('message/<int:id>/', views.message, name='message'),
     path('activeclient', views.activeclient, name='activeclient'),

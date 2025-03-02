@@ -32,7 +32,7 @@ def login(request):
                 "name": name
             }
             messages.success(request, "Login Successfully")
-            return redirect("adminapp/index")
+            return redirect("/adminapp/index")
         messages.error(request, "Wrong Username Or Password")
     return render(request, 'adminapp/login.html')
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Process</title>
+</head>
+<body>
+    <h1>Payment Process</h1>
+    <p>Welcome to the payment process page.</p>
+    <form class="text-center border border-light p-5" action="" method="POST">
+        {% csrf_token %}
+
+        <!-- RAZORPAY INTEGRATION HERE -->
+        <script src="https://checkout.razorpay.com/v1/checkout.js" 
+        data-key="rzp_test_PvM4GxK9MYlCUc" 
+        data-amount="{{payment.amount}}"
+        data-currency="INR" 
+        data-order_id="{{payment.id}}" 
+        data-buttontext="Pay with Razorpay"
+        data-name="Your Project Name"
+        data-description="Complete Ad Solution"
+        data-image="https://oibp1.000webhostapp.com/logo.PNG" 
+        data-prefill.name="{{request.user.first_name}}"
+        data-prefill.email="{{request.user.email}}" 
+        data-theme.color="#F37254"></script></form>
+    <script>
+</body>
+</html>

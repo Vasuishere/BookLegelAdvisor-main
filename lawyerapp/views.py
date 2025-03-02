@@ -172,6 +172,59 @@ def forgotpassword(request):
 def changepassword(request):
     return render(request,"lawyerapp/changepassword.html")
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import request_payment
+from clientapp.models import clients
+from datetime import datetime
+
+def payment_request(request, id):
+    if request.method == 'POST':
+        # Get form data
+        client_id = request.POST.get('clientSelect')
+        amount = request.POST.get('amountInput')
+        due_date = request.POST.get('dueDateInput')
+        description = request.POST.get('descriptionTextarea')
+        invoice_number = request.POST.get('invoiceInput')
+        
+        # Validate form data
+        if not client_id or not amount:
+            messages.error(request, "Client and amount are required fields.")
+            return render(request, "lawyerapp/paymentrequest.html")
+        
+        try:
+            # Get client instance
+            client = clients.objects.get(id=client_id)
+            
+            # Create payment request
+            payment_req = request_payment(
+                client=client,
+                amt=float(amount),
+                due_date=due_date if due_date else None,
+                description=description,
+                invoice_number=invoice_number
+            )
+            payment_req.save()
+            
+            messages.success(request, f"Payment request of ${amount} sent to {client.name}")
+            return redirect('dashboard')  # Redirect to appropriate page after successful submission
+            
+        except clients.DoesNotExist:
+            messages.error(request, "Selected client does not exist.")
+        except ValueError:
+            messages.error(request, "Invalid amount entered.")
+        except Exception as e:
+            messages.error(request, f"Error processing request: {str(e)}")
+    
+    # Get all clients for dropdown
+    all_clients = clients.objects.all()
+    context = {
+        'clients': all_clients
+    }
+    
+    return render(request, "lawyerapp/paymentrequest.html", context)
+
+
 def demo(request):
     random_no = ''.join([str(random.randint(0, 9)) for _ in range(8)])
     return render(request,'lawyerapp/demo.html', {'random': random_no})
